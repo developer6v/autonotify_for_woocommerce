@@ -2,7 +2,7 @@
 
 function autonotify_layout () {
     echo "<div>
-        <img src='teste.png' alt='' class=''/>
+        <img src='../../public/img/autonotify.svg' alt='' class=''/>
     </div>";
 }
 
