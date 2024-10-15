@@ -48,8 +48,15 @@
 .autonotify_title {
     font-weight: bold;
     font-size: 30px;
+}
+
+.div_autonotify_title {
     margin-bottom: 25px;
     display: block;
     border-bottom: 1px solid #595959;
     height: 40px;
+}
+
+.autonotify_subtitle {
+    float: right;
 }
