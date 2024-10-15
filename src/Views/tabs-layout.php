@@ -2,7 +2,7 @@
 
 function autonotify_layout () {
     echo "<div class='autonotify-header'>
-        <img src='" . plugins_url() . "/public/img/autonotify.svg' alt='' class=''/>
+        <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
     </div>
     
     <div>
