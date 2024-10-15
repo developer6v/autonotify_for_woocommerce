@@ -5,12 +5,14 @@
 }
 
 .autonotify-header img {
-    width: 80px;
+    width: 400px;
+    margin-top: 40px;
 }
 
 
 .autonotify-body {
-    margin-top: 100px;
+    background: white;
+    margin-top: 50px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     padding: 20px;
     border-radius: 40px;
@@ -18,4 +20,12 @@
 
 #autonotify_token {
     border-radius: 10px;
+    width: 200px;
+}
+
+.autonotify_validate_token {
+    border-radius: 7px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
 }
