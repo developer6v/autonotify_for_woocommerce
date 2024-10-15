@@ -6,6 +6,7 @@ function autonotify_layout () {
     </div>
     
     <div class='autonotify-body'>
+        <span class='autonotify_title'><i class='fa-solid fa-wrench'></i> Configurações</span>
         <input id = 'autonotify_token' placeholder='Informe seu token de integração Autonotify.' type = 'text'/>
         <button class='autonotify_validate_token'><i class='fa-solid fa-check-to-slot'></i> Validar Token</button>    
     </div>

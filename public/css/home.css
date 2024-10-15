@@ -44,3 +44,10 @@
 .autonotify_validate_token:active {
     transform: scale(1.0);
 }
+
+.autonotify_title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+    
+}
