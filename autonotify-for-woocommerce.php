@@ -23,8 +23,8 @@ register_activation_hook(__FILE__, 'autonotify_table_manager');
 add_action('admin_menu', 'autonotify_menu_manager', 50);
 
 // Carrega o JS e o CSS 
-wp_enqueue_script ('homeScript', plugins_url('public/js/home.js', __FILE__ ););
-wp_enqueue_style ('homeStyle', plugins_url('public/css/home.css', __FILE__ ););
+wp_enqueue_script ('homeScript', plugins_url('public/js/home.js', __FILE__ ));
+wp_enqueue_style ('homeStyle', plugins_url('public/css/home.css', __FILE__ ));
 
 
 // Configuração Menu
