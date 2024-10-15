@@ -5,7 +5,8 @@ function autonotify_layout () {
         <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
     </div>
     
-    <div>
+    <div class='autonotify-body'>
+        <input id = 'autonotify_token' placeholder='Informe seu token de integração Autonotify.' type = 'text'/>
     </div>
     ";
 }
