@@ -40,3 +40,7 @@
 .autonotify_validate_token:hover {
     transform: scale(1.1);
 }
+
+.autonotify_validate_token:active {
+    transform: scale(0.9);
+}
