@@ -42,5 +42,5 @@
 }
 
 .autonotify_validate_token:active {
-    transform: scale(0.9);
+    transform: scale(1.0);
 }
