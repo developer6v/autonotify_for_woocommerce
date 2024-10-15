@@ -36,6 +36,6 @@
     transition: transform ease 0.2s;
 }
 
-.autonotify_validate_token {
+.autonotify_validate_token:hover {
     transform: scale(1.1);
 }
