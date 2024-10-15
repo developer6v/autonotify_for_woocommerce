@@ -1,9 +1,13 @@
 <?php
 
 function autonotify_layout () {
-    echo "<div>
-        <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
-    </div>";
+    echo "<div class='autonotify-header'>
+        <img src='" . plugins_url() . "/public/img/autonotify.svg' alt='' class=''/>
+    </div>
+    
+    <div>
+    </div>
+    ";
 }
 
 
