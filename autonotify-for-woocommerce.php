@@ -12,6 +12,7 @@
 
 // Inicialização dos arquivos necessários
 require_once 'src/Views/tabs-layout.php';
+require_once 'src/Config/Database/autonotify_table_manager.php';
 
 
 register_activation_hook(__FILE__, 'autonotify_table_manager');
@@ -28,7 +29,7 @@ function autonotify_menu_manager() {
         'dashicons-update',                       
         55                                          
     );
-    
+
     /*add_submenu_page( 
         'whatsapp-settings',                       l
         __( 'Status', 'woocommerce' ),       
