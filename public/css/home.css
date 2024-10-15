@@ -19,13 +19,23 @@
 }
 
 #autonotify_token {
-    border-radius: 10px;
-    width: 200px;
+    border-radius: 20px;
+    width: 300px;
 }
 
 .autonotify_validate_token {
-    border-radius: 7px;
-    padding: 10px;
+    border-radius: 4px;
+    padding: 7px;
     color: white;
     font-weight: bold;
+    background: #2e8181;
+    border: 0;
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform ease 0.2s;
+}
+
+.autonotify_validate_token {
+    transform: scale(1.1);
 }
