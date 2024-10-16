@@ -9,7 +9,7 @@ $token = $_POST['token'] ?? null;
 
 if ($token) {
     $status = validate_token ($token);
-    if ($status) {
+    if ($status == 'active') {
         echo save_token_database ($token, $status);
     } else {
         'Token Inválido!';
