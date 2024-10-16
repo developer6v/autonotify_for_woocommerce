@@ -107,12 +107,28 @@
     display: none;
 }
 
-.autonotify_token_label_active {
+.tokencheckedicon {
     color: #00ff14;
+    font-size: 17px;
 }
 
 .autonotify_edit_token {
-    border: 0;
-    background-color: none;
-    
+    color: #f4f4f4;
+    font-size: 12px;
+    font-weight: bold;
+    border: 0px;
+    padding: 5px;
+    background-color: #bcbcbc;
+    margin-top: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.autonotify_edit_token:hover {
+    transform: scale(1.1);
+}
+
+.autonotify_edit_token:active {
+    transform: scale(0.9);
 }
