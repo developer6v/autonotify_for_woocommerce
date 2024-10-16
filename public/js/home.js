@@ -10,7 +10,11 @@ jQuery(document).ready(function($){
                 "token" : token,
             },
             success : function (response) {
-                $('.autonotify_token_saved').fadeIn();
+                if (response != 'teste') {
+                    $('.autonotify_token_failed').fadeIn();
+                } else {
+                    $('.autonotify_token_saved').fadeIn();
+                }
                 console.log (response);
             },
             error: function (response) {
@@ -24,11 +28,11 @@ jQuery(document).ready(function($){
 
             setTimeout (function () {
                 $('.autonotify_token_saved').fadeOut();
-            }, 3000);
+            }, 5000);
 
             setTimeout (function () {
                 $('.autonotify_token_failed').fadeOut();
-            }, 3000);
+            }, 5000);
         });
     });
 });
