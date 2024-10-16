@@ -9,17 +9,11 @@ function autonotify_layout () {
     $sqlStatus = $wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", 1);
     $status = $wpdb->get_var($sqlStatus);
 
-    if ($status == 'active') {
-
-    } else {
-
-    }
-
     echo "<div class='autonotify-header'>
         <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
     </div>
     
-    <div class='autonotify-body'>
+    <div class='autonotify-body' data-status='$status'>
         <div class='div_autonotify_title'>
             <span class='autonotify_title'>Configurações</span>
             <span class='autonotify_subtitle' title='Configure o seu AutoNotify.'><i class='fa-solid fa-circle-info'></i></span>    
