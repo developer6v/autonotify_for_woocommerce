@@ -128,3 +128,7 @@
 .autonotify_edit_token:active {
     transform: scale(0.9);
 }
+
+.autonotify_body_inactive, .autonotify_body_active {
+    display: none;
+}
