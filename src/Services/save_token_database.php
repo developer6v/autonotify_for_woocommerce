@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 function save_token_database ($token) {
     try {
-        require_once '/../../../../../wp-admin/includes/upgrade.php';
+        require_once __DIR__ . '/../../../../../wp-admin/includes/upgrade.php';
         return 'deu certo';
 
     } catch (Exception $e) {
