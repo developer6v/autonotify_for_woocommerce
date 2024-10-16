@@ -96,6 +96,6 @@
     position: fixed;   
 }
 
-.autonotify_warning_div {
+.autonotify_token_saved, .autonotify_token_failed {
     display: none;
 }

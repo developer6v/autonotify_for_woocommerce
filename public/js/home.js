@@ -23,7 +23,11 @@ jQuery(document).ready(function($){
             }, 3000);
 
             setTimeout (function () {
-                $('.autonotify_warning_div').fadeOut();
+                $('.autonotify_token_saved').fadeOut();
+            }, 3000);
+
+            setTimeout (function () {
+                $('.autonotify_token_failed').fadeOut();
             }, 3000);
         });
     });
