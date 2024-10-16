@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
     // Gerenciamento Layout - Status
     var statusAunotify = $('.autonotify-body').data('status');
-    if (statusAunotify ==- 'active') {
+    if (statusAunotify == 'active') {
         $('.autonotify_body_active').show();
     } else {
         $('.autonotify_body_inactive').show();
