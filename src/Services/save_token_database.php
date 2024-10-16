@@ -7,7 +7,7 @@ function save_token_database ($token) {
         return 'deu certo';
 
     } catch (Exception $e) {
-        return 'deu erro';
+        return 'deu erro: ' . $e->getMessage();
 
     }
 
