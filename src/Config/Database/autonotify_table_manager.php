@@ -1,7 +1,6 @@
 <?php
 
-
-function autonotify_table_manager () {
+function autonotify_table_manager() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'autonotify_config';
     $charset_collate = $wpdb->get_charset_collate();
@@ -9,14 +8,20 @@ function autonotify_table_manager () {
     if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL auto_increment,
-            token varchar(60) NOT NULL,
-            status varchar(60) NOT NULL,
-            PRIMARY KEY id (id) 
+            token varchar(60) NULL,
+            status varchar(60) NULL,
+            PRIMARY KEY (id) 
         ) $charset_collate";
 
+        require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+        dbDelta($sql);
+        
+        $data = array(
+            'token' => '', 
+            'status' => '' 
+        );
 
-		require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-		dbDelta( $sql );
+        $wpdb->insert($table_name, $data);
     }
 }
 
