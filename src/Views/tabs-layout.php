@@ -32,7 +32,6 @@ function autonotify_layout () {
                 <input readonly value = '" . $token  ."' id = 'autonotify_token' placeholder='Informe seu token de integração Autonotify.' type = 'text'/>
                 <i class='fa-solid fa-circle-check tokencheckedicon'></i>
             </div>
-            <img class='autonotify_loading' src='../wp-content/plugins/autonotify-for-woocommerce/public/gif/loading.gif' alt='' class=''/>
             <button class='autonotify_edit_token'><i class='fa-solid fa-pen-to-square'></i> Redefinir Token</button>        
         </div>
 

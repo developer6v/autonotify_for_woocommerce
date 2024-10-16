@@ -1,7 +1,8 @@
 jQuery(document).ready(function($){
+
+    // Validar e Salvar Token
     $('#autonotify_validate_token').click(function() {
         $('.autonotify_loading').fadeIn();
-
         var token = $('#autonotify_token').val();
         $.ajax ({
             url: "../wp-content/plugins/autonotify-for-woocommerce/src/Controllers/token.php",
@@ -35,5 +36,13 @@ jQuery(document).ready(function($){
                 $('.autonotify_token_failed').fadeOut();
             }, 5000);
         });
+    });
+
+
+
+    // Redefinir Token
+    $('.autonotify_edit_token').click(function () {
+        $(this).hide();
+        $('autonotify_body_inactive').show();
     });
 });
