@@ -89,9 +89,13 @@
     padding: 10px;
     color: white;
     font-weight: bold;
-    background-color: brown;
+    background-color: #ca2b2b;
     border-radius: 5px;
     right: 20px;
     bottom: 50px;
     position: fixed;   
+}
+
+.autonotify_warning_div {
+    display: none;
 }
