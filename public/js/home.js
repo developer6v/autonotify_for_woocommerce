@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
                     $('.autonotify_token_failed').fadeIn();
                 } else {
                     $('.autonotify_token_saved').fadeIn();
-                    window.reload();
+                    window.location.reload();
                 }
                 console.log (response);
             },
