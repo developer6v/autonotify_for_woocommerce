@@ -1,6 +1,7 @@
 <?php
 
 function save_token_database ($token) {
+    return "teste";
     try {
         require_once __FILE__ . '/../../../../../wp-admin/includes/upgrade.php';
         return 'deu certo';
