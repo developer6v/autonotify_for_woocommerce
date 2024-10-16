@@ -42,7 +42,7 @@ jQuery(document).ready(function($){
 
     // Redefinir Token
     $('.autonotify_edit_token').click(function () {
-        $(this).hide();
-        $('autonotify_body_inactive').show();
+        $('.autonotify_body_active').hide();
+        $('.autonotify_body_inactive').show();
     });
 });
