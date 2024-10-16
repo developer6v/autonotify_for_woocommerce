@@ -70,4 +70,6 @@
 
 .autonotify_token_label {
     color: rgb(24, 49, 83);
+    font-weight: bold;
+    font-size: 14px;
 }
