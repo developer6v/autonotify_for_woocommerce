@@ -74,7 +74,7 @@
 .autonotify_token_label {
     color: rgb(24, 49, 83);
     font-weight: bold;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .autonotify_token_saved {
@@ -118,7 +118,7 @@
     font-weight: bold;
     border: 0px;
     padding: 5px;
-    background-color: #bcbcbc;
+    background-color: #505050;
     margin-top: 15px;
     border-radius: 10px;
     cursor: pointer;
