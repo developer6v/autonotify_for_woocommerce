@@ -26,6 +26,10 @@ function autonotify_layout () {
         <div class='autonotify_token_saved'>
             <span><i class='fa-solid fa-check'></i> Token Validado!</span>
         </div>
+
+        <div class='autonotify_token_failed'>
+            <span><i class='fa-solid fa-circle-exclamation'></i> Falha ao Validar Token!</span>
+        </div>
     </div>
     ";
 } 

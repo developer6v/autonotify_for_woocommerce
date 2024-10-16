@@ -77,9 +77,21 @@
 .autonotify_token_saved {
     padding: 10px;
     color: white;
-    background-color: chartreuse;
+    font-weight: bold;
+    background-color: #00ff14;
     border-radius: 5px;
-    float: right;
+    right: 20px;
     bottom: 50px;
     position: fixed;
+}
+
+.autonotify_token_failed {
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: brown;
+    border-radius: 5px;
+    right: 20px;
+    bottom: 50px;
+    position: fixed;   
 }
