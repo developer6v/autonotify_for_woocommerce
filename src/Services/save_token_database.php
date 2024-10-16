@@ -4,8 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 function save_token_database ($token) {
     try {
-        //require_once '/../../../../../wp-admin/includes/upgrade.php';
-        return 'deu certo';
+        $path = __FILE__ . '/../../../../../wp-admin/includes/upgrade.php';
+        echo "Tentando incluir: $path\n"; // Adicione isso para depuração
+        require_once $path;
+        return 'deu certo'
 
     } catch (Exception $e) {
         return 'deu erro: ' . $e->getMessage();
