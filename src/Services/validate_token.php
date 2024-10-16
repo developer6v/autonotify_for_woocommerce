@@ -2,6 +2,6 @@
 
 function validate_token ($token) {
 
-    return 'inactive';
+    return 'active';
 
 }
