@@ -99,3 +99,11 @@
 .autonotify_token_saved, .autonotify_token_failed {
     display: none;
 }
+
+.autonotify_body_inactive {
+    display: none;
+}
+
+.tokencheckedicon {
+    color: #00ff14;
+}

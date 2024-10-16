@@ -1,12 +1,12 @@
 <?php
 
-function save_token_database ($token) {
+function save_token_database ($token, $status) {
     try {
         require_once __DIR__ . '/../../../../../wp-load.php';
 
         global $wpdb;
         $table_name = $wpdb->prefix . 'autonotify_config';
-        $sql = $wpdb->prepare("UPDATE $table_name SET token = %s WHERE id = %d", $token, 1);
+        $sql = $wpdb->prepare("UPDATE $table_name SET token = %s, status = %s WHERE id = %d", $token, $status, 1);
         $wpdb->query($sql);
 
         $result = $wpdb->query($sql);
