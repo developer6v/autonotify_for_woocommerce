@@ -1,7 +1,0 @@
-<?php
-
-function getOrder ($orderId) {
-    
-} 
-
-?>
