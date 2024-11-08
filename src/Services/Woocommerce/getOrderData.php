@@ -24,7 +24,7 @@ function getOrderData($orderId) {
     $state = $order->get_billing_state();    
     $customer_id = $order->get_user_id();   
 
-    $address = $address_1 . ', ' . $address_2 . ' - ' . $order->get_billing_neighborhood() . ' - ' . $city . '/' . $state;
+    $address = $address_1 . ', ' . $address_2 . ' - ' . ' - ' . $city . '/' . $state;
 
  
     $items = [];
