@@ -12,6 +12,7 @@ jQuery(document).ready(function($){
     $('#autonotify_validate_token').click(function() {
         $('.autonotify_loading').fadeIn();
         var token = $('#autonotify_token').val();
+        alert (token);
         $.ajax ({
             url: "../wp-content/plugins/autonotify-for-woocommerce/src/Controllers/token.php",
             method: "POST",
