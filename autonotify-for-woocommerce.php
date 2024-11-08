@@ -15,6 +15,8 @@
 
 require_once 'src/Views/tabs-layout.php';
 require_once 'src/Config/Database/autonotify_table_manager.php';
+require_once 'src/Core/hooks.php';
+
 
 // Ativação do Plugin - Cria Tabela
 register_activation_hook(__FILE__, 'autonotify_table_manager');
