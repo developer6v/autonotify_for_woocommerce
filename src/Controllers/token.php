@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../Services/save_token_database.php';
-require_once __DIR__ . '/../Services/validate_token.php';
+require_once __DIR__ . '/../Services/Database/save_token_database.php';
+require_once __DIR__ . '/../Services/Api/validate_token.php';
 
 $token = $_POST['token'] ?? null;
 

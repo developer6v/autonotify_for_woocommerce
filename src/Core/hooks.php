@@ -3,6 +3,8 @@
 add_action('woocommerce_order_status_changed', 'testesoureiorderstatuschanged', 10, 3);
 
 function testesoureiorderstatuschanged ($order_id,$old_status,$new_status) {
+    $order = new WC_Order( $order_id );
+
     $data = [
         "orderid" => $order_id,
         "old_status" => $old_status,

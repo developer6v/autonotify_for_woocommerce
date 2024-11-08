@@ -25,4 +25,7 @@ function autonotify_table_manager() {
     }
 }
 
+register_activation_hook(__FILE__, 'autonotify_table_manager');
+
+
 ?>
