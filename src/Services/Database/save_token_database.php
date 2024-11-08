@@ -2,7 +2,7 @@
 
 function save_token_database ($token, $status) {
     try {
-        require_once __DIR__ . '/../../../../../wp-load.php';
+        require_once __DIR__ . '/../../../../../../wp-load.php';
 
         global $wpdb;
         $table_name = $wpdb->prefix . 'autonotify_config';
