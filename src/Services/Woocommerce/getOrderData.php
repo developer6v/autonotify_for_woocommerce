@@ -7,7 +7,6 @@ function getOrderData($orderId) {
     $instanceKey = $wpdb->get_var($sqlInstanceKey);
 
 
-
     $order = new WC_Order($orderId);
 
     $customer_name = $order->get_meta('_billing_first_name') . ' ' . $order->get_meta('_billing_last_name');
