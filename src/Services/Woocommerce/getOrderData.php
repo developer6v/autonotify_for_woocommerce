@@ -4,7 +4,7 @@ function getOrderData($orderId) {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
     $sqlInstanceKey = $wpdb->prepare("SELECT instance_key FROM $table_name WHERE id = %d", 1);
-    $instanceKey = $wpdb->get_var($sqlToken);
+    $instanceKey = $wpdb->get_var($sqlInstanceKey);
 
 
 
