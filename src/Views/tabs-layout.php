@@ -8,7 +8,7 @@ function autonotify_layout () {
     $sqlStatus = $wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", 1);
     $status = $wpdb->get_var($sqlStatus);
 
-    echo "<div class='autonotify-header'>
+    echo "<div class='autonotify-header' data-wpp='$wpdb->prefix'>
         <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
     </div>
 
