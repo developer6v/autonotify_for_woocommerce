@@ -9,7 +9,7 @@ function validate_token ($token) {
 
 
     $response = [
-        'instance_key' => 'teste123'
+        'instance_key' => 'autonotify-1-cd8f2d98f12c05711277'
     ];
 
     if (isset($response['instance_key'])) {
