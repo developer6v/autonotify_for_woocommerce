@@ -19,7 +19,8 @@ function autonotify_table_manager() {
         
         $data = array(
             'token' => '', 
-            'status' => '' 
+            'status' => '',
+            'instance_key' => ''
         );
 
         $wpdb->insert($table_name, $data);
