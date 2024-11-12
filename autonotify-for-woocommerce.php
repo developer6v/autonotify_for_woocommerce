@@ -9,7 +9,6 @@
  * Author URI: https://sourei.com.br/
  */
 
- require 'vendor/autoload.php';
  require_once 'src/Config/index.php';
 
 
