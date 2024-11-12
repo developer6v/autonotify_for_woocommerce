@@ -14,7 +14,7 @@ function getOrderData($orderId) {
         $customer_email = $order->get_billing_email();
     }
     if (empty($customer_phone)) {
-        $customer_phone = $order->get_billing_phone();
+        $customer_phone = $order->get_billing_phone(); 
     }
 
     $address_1 = $order->get_billing_address_1(); 

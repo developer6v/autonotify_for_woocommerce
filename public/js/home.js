@@ -17,9 +17,10 @@ jQuery(document).ready(function($){
             method: "POST",
             data: {
                 "token" : token,
-            },
+            }, 
             success : function (response) {
                 if (response != 'Token atualizado com sucesso.') {
+                    
                     $('.autonotify_token_failed').fadeIn();
                 } else {
                     $('.autonotify_token_saved').fadeIn();

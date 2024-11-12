@@ -9,6 +9,7 @@ function autonotify_table_manager() {
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL auto_increment,
             token varchar(60) NULL,
+            instance_key varchar(60) NULL,
             status varchar(60) NULL,
             PRIMARY KEY (id) 
         ) $charset_collate";
