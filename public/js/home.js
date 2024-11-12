@@ -19,8 +19,9 @@ jQuery(document).ready(function($){
                 "token" : token,
             }, 
             success : function (response) {
+                alert(response);
                 if (response != 'Token atualizado com sucesso.') {
-                    
+
                     $('.autonotify_token_failed').fadeIn();
                 } else {
                     $('.autonotify_token_saved').fadeIn();
