@@ -11,11 +11,11 @@ function sendAutonotify($data) {
         "Authorization" => "Bearer " . $token
     ];
 
-    $response = wp_remote_post('https://webhook.site/bc6655e8-0cd2-460a-86dc-74fdc298e28b', [
+    $response = wp_remote_post('https://webhook.site/a35bc04f-7558-443e-b195-d6ecdb3f5c65', [
         'method'    => 'POST',
         'body'      => json_encode($data), 
         'headers'   => $headers,            
-        'timeout'   => 15,                  
+        'timeout'   => 15,                   
     ]);
 
 

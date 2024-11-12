@@ -1,6 +1,13 @@
 <?php
 
 function getOrderData($orderId) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . "autonotify_config";
+    $sqlInstanceKey = $wpdb->prepare("SELECT instance_key FROM $table_name WHERE id = %d", 1);
+    $instanceKey = $wpdb->get_var($sqlToken);
+
+
+
     $order = new WC_Order($orderId);
 
     $customer_name = $order->get_meta('_billing_first_name') . ' ' . $order->get_meta('_billing_last_name');
@@ -34,18 +41,24 @@ function getOrderData($orderId) {
     $items_string = implode(', ', $items);
 
     $data = [
-        "orderid" => $orderId,
-        "paymentmethod" => $order->get_payment_method_title(),  
-        "address" => $address,                                  
-        "customername" => $customer_name,                        
-        "customeremail" => $customer_email,                     
-        "customerphone" => $customer_phone,  
-        "customerid" => $customer_id,                    
-        "ordertotal" => $order->get_total(),                  
-        "status" => $order->get_status(),                    
-        "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'), 
-        "items" => $items_string,                                 
+        "action" => "order",
+        "instance_key" => $instanceKey,
+        "data" => [
+            "orderid" => $orderId,
+            "paymentmethod" => $order->get_payment_method_title(),  
+            "address" => $address,                                  
+            "customername" => $customer_name,                        
+            "customeremail" => $customer_email,                     
+            "customerphone" => $customer_phone,  
+            "customerid" => $customer_id,                    
+            "ordertotal" => $order->get_total(),                  
+            "status" => $order->get_status(),                    
+            "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'), 
+            "items" => $items_string,  
+        ] 
     ];
+
+
 
     return $data; 
 }
