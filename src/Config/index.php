@@ -38,6 +38,6 @@ function autonotify_table_manager() {
     }
 }
 
-autonotify_table_manager();
+register_activation_hook(PLUGIN_FILE_URL, 'autonotify_table_manager')
 
 ?>
