@@ -1,21 +1,25 @@
 <?php
 
+
 function validate_token ($token) {
 
-    require_once __DIR__ . '/../../../../../../wp-load.php';
-
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'autonotify_config';
-
-
-    $response = [
-        'instance_key' => 'autonotify-1-cd8f2d98f12c05711277'
+    $headers = [
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer " . $token
     ];
 
-    if (isset($response['instance_key'])) {
-        $sql = $wpdb->prepare("UPDATE $table_name SET instance_key = %s WHERE id = %d", $response['instance_key'], 1);
-        $result = $wpdb->query($sql);
-    }
+    $response = wp_remote_post('https://a8ea-187-110-208-152.ngrok-free.app/auth', [
+        'method'    => 'POST',
+        'headers'   => $headers,            
+        'timeout'   => 15,                   
+    ]);
 
-    return 'active';
+
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        error_log("Request failed: $error_message");
+    } else {
+        $response_body = wp_remote_retrieve_body($response);
+        return $response_body;
+    }
 }

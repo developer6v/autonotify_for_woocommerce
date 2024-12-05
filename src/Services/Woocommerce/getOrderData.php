@@ -39,6 +39,7 @@ function getOrderData($orderId) {
     }
     $items_string = implode(', ', $items);
 
+
     $data = [
         "action" => "order",
         "instance_key" => $instanceKey,
@@ -53,7 +54,9 @@ function getOrderData($orderId) {
             "ordertotal" => $order->get_total(),                  
             "status" => $order->get_status(),                    
             "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'), 
-            "items" => $items_string,  
+            "items" => $items_string, 
+            "date" => date("d/m/Y"),
+            "hour" => date("H:i:s")
         ] 
     ];
 

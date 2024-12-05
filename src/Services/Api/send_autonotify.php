@@ -11,7 +11,7 @@ function sendAutonotify($data) {
         "Authorization" => "Bearer " . $token
     ];
 
-    $response = wp_remote_post('https://6a558515d950-11899502608096553915.ngrok-free.app/webhook/woocommerce', [
+    $response = wp_remote_post(' https://1b97-187-110-208-152.ngrok-free.app/config/hooks', [
         'method'    => 'POST',
         'body'      => json_encode($data), 
         'headers'   => $headers,            
@@ -26,7 +26,6 @@ function sendAutonotify($data) {
         $response_body = wp_remote_retrieve_body($response);
         return $response_body;
     }
-
 }
 
 ?>
