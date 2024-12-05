@@ -7,8 +7,10 @@ function autonotify_layout () {
     $token = $wpdb->get_var($sqlToken);
     $sqlStatus = $wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", 1);
     $status = $wpdb->get_var($sqlStatus);
+    $nome_banco = $wpdb->dbname;
 
-    echo "<div class='autonotify-header' data-banco='$wpdb->prefix'>
+
+    echo "<div class='autonotify-header' data-banco='$nome_banco'>
         <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
     </div>
 
