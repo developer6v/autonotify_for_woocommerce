@@ -46,6 +46,7 @@ function getOrderData($orderId) {
         "customername" => $customer_name,                        
         "customeremail" => $customer_email,                     
         "customerphone" => $customer_phone,  
+        "phone" => $customer_phone,  
         "customerid" => $customer_id,                    
         "ordertotal" => $order->get_total(),                  
         "status" => $order->get_status(),                    
