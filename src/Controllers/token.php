@@ -10,7 +10,7 @@ if ($token) {
     if ($status == 'Access granted') {
         echo save_token_database ($token, $status);
     } else {
-        'Token Inválido!';
+        echo 'Token Inválido!' . $status;
     }
 }  else {
     echo "Erro na requisição (Token Não Encontrado)!";
