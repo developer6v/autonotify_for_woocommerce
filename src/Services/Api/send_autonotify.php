@@ -14,7 +14,7 @@ function sendAutonotify($hook, $data) {
     $postfiels = [
         "keys" => $hook,
         "data" => $data,
-    ]
+    ];
 
     $response = wp_remote_post('https://a8ea-187-110-208-152.ngrok-free.app/hooks/woocommerce', [
         'method'    => 'POST',
