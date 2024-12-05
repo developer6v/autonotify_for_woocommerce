@@ -4,6 +4,9 @@ function sendAutonotify($hook, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
     $sqlToken = $wpdb->prepare("SELECT token FROM $table_name WHERE id = %d", 1);
+
+
+    $api_key = API_URL;
     $token = $wpdb->get_var($sqlToken);
 
     $headers = [
@@ -16,7 +19,7 @@ function sendAutonotify($hook, $data) {
         "data" => $data,
     ];
 
-    $response = wp_remote_post('https://8453-187-110-208-152.ngrok-free.app/hooks/woocommerce', [
+    $response = wp_remote_post("$api_key/hooks/woocommerce", [
         'method'    => 'POST',
         'body'      => json_encode($postfiels), 
         'headers'   => $headers,            

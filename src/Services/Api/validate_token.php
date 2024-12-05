@@ -4,12 +4,15 @@
 function validate_token ($token) {
     require_once __DIR__ . '/../../../../../../wp-load.php';
 
+
+    $api_key = API_URL;
+
     $headers = [
         "Content-Type" => "application/json",
         "Authorization" => "Bearer " . $token
     ];
 
-    $response = wp_remote_post('https://8453-187-110-208-152.ngrok-free.app/auth', [
+    $response = wp_remote_post("$api_key/auth", [
         'method'    => 'POST',
         'headers'   => $headers,            
         'timeout'   => 15,                   
