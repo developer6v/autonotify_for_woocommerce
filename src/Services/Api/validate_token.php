@@ -2,6 +2,7 @@
 
 
 function validate_token ($token) {
+    require_once __DIR__ . '/../../../../../../wp-load.php';
 
     $headers = [
         "Content-Type" => "application/json",
