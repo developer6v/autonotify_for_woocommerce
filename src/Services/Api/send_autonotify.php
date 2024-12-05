@@ -1,6 +1,6 @@
 <?php
 
-function sendAutonotify($data) {
+function sendAutonotify($hook, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
     $sqlToken = $wpdb->prepare("SELECT token FROM $table_name WHERE id = %d", 1);
@@ -11,9 +11,14 @@ function sendAutonotify($data) {
         "Authorization" => "Bearer " . $token
     ];
 
+    $postfiels = [
+        "keys" => $hook,
+        "data" => $data,
+    ]
+
     $response = wp_remote_post('https://a8ea-187-110-208-152.ngrok-free.app/hooks/woocommerce', [
         'method'    => 'POST',
-        'body'      => json_encode($data), 
+        'body'      => json_encode($postfiels), 
         'headers'   => $headers,            
         'timeout'   => 15,                   
     ]);
