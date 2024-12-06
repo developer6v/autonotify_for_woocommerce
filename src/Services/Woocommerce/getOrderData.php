@@ -39,8 +39,8 @@ function getOrderData($orderId) {
     $items_string = implode(', ', $items);
 
 
-    $admin_order_url = admin_url('post.php?post=' . $order_id . '&action=edit');
-    $customer_order_url = wc_get_endpoint_url('view-order', $order_id, wc_get_page_permalink('myaccount'));
+    $admin_order_url = admin_url('post.php?post=' . $orderId . '&action=edit');
+    $customer_order_url = wc_get_endpoint_url('view-order', $orderId, wc_get_page_permalink('myaccount'));
 
     $companyname = get_bloginfo('name');
 
