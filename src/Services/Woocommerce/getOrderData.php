@@ -48,7 +48,7 @@ function getOrderData($orderId) {
         "customerphone" => $customer_phone,  
         "phone" => $customer_phone,  
         "customerid" => $customer_id,                    
-        "ordertotal" => $order->get_total(),                  
+        "ordertotal" => number_format($order->get_total(), 2, ',', ''),
         "status" => $order->get_status(),                    
         "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'), 
         "items" => $items_string, 
