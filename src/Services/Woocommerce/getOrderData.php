@@ -29,7 +29,7 @@ function getOrderData($orderId) {
     $state = $order->get_billing_state();    
     $customer_id = $order->get_user_id();   
 
-    $address = $address_1 . ', ' . $address_2 . ' - ' . ' - ' . $city . '/' . $state;
+    $address = $address_1 . ' - ' . $city . '/' . $state;
 
  
     $items = [];
@@ -39,8 +39,17 @@ function getOrderData($orderId) {
     $items_string = implode(', ', $items);
 
 
+    $admin_order_url = admin_url('post.php?post=' . $order_id . '&action=edit');
+    $customer_order_url = wc_get_endpoint_url('view-order', $order_id, wc_get_page_permalink('myaccount'));
+
+    $companyname = get_bloginfo('name');
+
+ 
     $data = [
         "orderid" => $orderId,
+        "companyname" => $companyname,
+        "customerorderurl" => $customer_order_url,
+        "adminorderurl" => $admin_order_url,
         "paymentmethod" => $order->get_payment_method_title(),  
         "address" => $address,                                  
         "customername" => $customer_name,                        
