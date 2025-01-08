@@ -20,7 +20,7 @@ function getResetPasswordData($user) {
     $customer_id = $user->ID;
 
     $data = [
-        "reset_url" => $reset_url,
+        "passwordreseturl" => $reset_url,
         "date" => date("d/m/Y"),
         "hour" => date("H:i:s"),
         "address" => $address,                                  
