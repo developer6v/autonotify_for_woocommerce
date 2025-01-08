@@ -20,7 +20,7 @@ add_action( 'retrieve_password', 'custom_password_reset_email_sent', 10, 1 );
 function custom_password_reset_email_sent( $user_login ) {
     $user = get_user_by( 'login', $user_login );
     if ( $user ) {
-        error_log( 'Password reset email sent to: ' . $user->user_email );
+        error_log( '[teste] Password reset email sent to: ' . $user->user_email );
     }
 }
 

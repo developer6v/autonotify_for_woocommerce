@@ -1,6 +1,11 @@
 <?php
 
-function getOrderData($orderId) {
+function getResetPasswordData($user) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . "autonotify_config";
+    $sqlInstanceKey = $wpdb->prepare("SELECT instance_key FROM $table_name WHERE id = %d", 1);
+
+
     $order = new WC_Order($orderId);
 
     $customer_name = $order->get_meta('_billing_first_name') . ' ' . $order->get_meta('_billing_last_name');
