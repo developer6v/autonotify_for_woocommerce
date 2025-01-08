@@ -15,7 +15,7 @@ function newordermanager ($order) {
 }
 
 // Senha trocada
-//add_action( 'retrieve_password', 'custom_password_reset_email_sent', 10, 1 );
+add_action( 'retrieve_password', 'custom_password_reset_email_sent', 10, 3 );
 function custom_password_reset_email_sent( $user_login ) {
     $user = get_user_by( 'login', $user_login );
     $data = getResetPasswordData ($user);
