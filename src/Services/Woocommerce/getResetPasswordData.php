@@ -2,7 +2,11 @@
 
 function getResetPasswordData($user) {
     
-    $customer_phone = get_user_meta( $user->ID, 'billing_phone', true );
+    $customer_phone = get_user_meta($user->ID, 'billing_phone', true);
+    if (empty($customer_phone)) {
+        $customer_phone = get_user_meta($user->ID, 'shipping_phone', true);
+    }
+
     $key = get_password_reset_key( $user );
     $reset_url = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' );
 
@@ -23,6 +27,7 @@ function getResetPasswordData($user) {
         "customername" => $customer_name,                        
         "customeremail" => $customer_email,                     
         "customerphone" => $customer_phone,
+        "phone" => $customer_phone,  
         "customerid" => $customer_id,                      
     ];
 
