@@ -1,73 +1,45 @@
 <?php
 
 function getResetPasswordData($user) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . "autonotify_config";
-    $sqlInstanceKey = $wpdb->prepare("SELECT instance_key FROM $table_name WHERE id = %d", 1);
-
-
-    $order = new WC_Order($orderId);
-
-    $customer_name = $order->get_meta('_billing_first_name') . ' ' . $order->get_meta('_billing_last_name');
-    $customer_email = $order->get_meta('_billing_email');
-    $customer_phone = $order->get_meta('_billing_phone');
     
-    if (empty($customer_name)) {
-        $customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+    $phone = get_user_meta( $user->ID, 'billing_phone', true );
+
+    if ( $phone ) {
+        $key = get_password_reset_key( $user );
+        $reset_url = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' );
+
+        $mensagem = "Olá, " . $user->first_name . "! Recebemos sua solicitação para redefinir a senha da sua conta. Para continuar, clique no link abaixo:\n\n";
+        $mensagem .= $reset_url . "\n\n";
+        $mensagem .= "Se você não fez essa solicitação, entre em contato conosco imediatamente.";
+
+        // Montar payload para a API do WhatsApp
+        $payload = array(
+            'to'      => $telefone,
+            'message' => $mensagem,
+        );
+
+        // Fazer chamada à API do WhatsApp
+        $url = 'https://sua-api-whatsapp.com/enviar-mensagem'; // Substitua pela URL da sua API
+
+        $response = wp_remote_post( $url, array(
+            'body'    => json_encode( $payload ),
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer SEU_TOKEN_DE_AUTENTICACAO' // Ajuste conforme sua API
+            ),
+            'method'  => 'POST'
+        ));
+
+        // Opcional: Log para verificar se a mensagem foi enviada
+        if ( is_wp_error( $response ) ) {
+            error_log( 'Erro ao enviar mensagem para WhatsApp: ' . $response->get_error_message() );
+        } else {
+            error_log( 'Mensagem enviada para WhatsApp com sucesso para: ' . $telefone );
+        }
+    } else {
+        error_log( 'Telefone não encontrado para o usuário: ' . $user->user_email );
     }
-    if (empty($customer_email)) {
-        $customer_email = $order->get_billing_email();
-    }
-    if (empty($customer_phone)) {
-        $customer_phone = $order->get_billing_phone(); 
-    }
 
-    $address_1 = $order->get_billing_address_1(); 
-    $address_2 = $order->get_billing_address_2();
-    $city = $order->get_billing_city();           
-    $postcode = $order->get_billing_postcode();    
-    $state = $order->get_billing_state();    
-    $customer_id = $order->get_user_id();   
-
-    $address = $address_1 . ' - ' . $city . '/' . $state;
-
- 
-    $items = [];
-    foreach ($order->get_items() as $item_id => $item) {
-        $items[] = $item->get_name(); 
-    }
-    $items_string = implode(', ', $items);
-
-
-    $admin_order_url = admin_url('post.php?post=' . $orderId . '&action=edit');
-    $customer_order_url = wc_get_endpoint_url('view-order', $orderId, wc_get_page_permalink('myaccount'));
-
-    $companyname = get_bloginfo('name');
-
- 
-    $data = [
-        "orderid" => $orderId,
-        "companyname" => $companyname,
-        "customerorderurl" => $customer_order_url,
-        "adminorderurl" => $admin_order_url,
-        "paymentmethod" => $order->get_payment_method_title(),  
-        "address" => $address,                                  
-        "customername" => $customer_name,                        
-        "customeremail" => $customer_email,                     
-        "customerphone" => $customer_phone,  
-        "phone" => $customer_phone,  
-        "customerid" => $customer_id,                    
-        "ordertotal" => number_format($order->get_total(), 2, ',', ''),
-        "status" => $order->get_status(),                    
-        "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'), 
-        "items" => $items_string, 
-        "date" => date("d/m/Y"),
-        "hour" => date("H:i:s")
-    ];
-
-
-
-    return $data; 
 }
 
 ?>
