@@ -17,6 +17,7 @@ function newordermanager ($order) {
 // Senha trocada
 add_action( 'woocommerce_reset_password_notification', 'custom_password_reset_email_sent', 10, 3 );
 function custom_password_reset_email_sent( $user_login, $key ) {
+    error_log('key0, ', $key);
     $user = get_user_by( 'login', $user_login );
     $data = getResetPasswordData ($user);
     sendAutonotify(['password_reset'], $data);
