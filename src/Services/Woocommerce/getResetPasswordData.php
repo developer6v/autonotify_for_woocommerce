@@ -25,6 +25,8 @@ function getResetPasswordData($user) {
         "customerphone" => $customer_phone,
         "customerid" => $customer_id,                      
     ];
+
+    return $data;
 }
 
 ?>
