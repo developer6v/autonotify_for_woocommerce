@@ -7,8 +7,7 @@ function getResetPasswordData($user) {
         $customer_phone = get_user_meta($user->ID, 'shipping_phone', true);
     }
 
-    $key = get_password_reset_key( $user );
-    $reset_url = network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' );
+    $reset_url = wp_lostpassword_url();
 
     $address_1 = get_user_meta($user->ID, 'billing_address_1', true);
     $city = get_user_meta($user->ID, 'billing_city', true);

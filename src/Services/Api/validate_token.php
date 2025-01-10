@@ -7,11 +7,13 @@ function validate_token ($token) {
         "Content-Type" => "application/json",
         "Authorization" => "Bearer " . $token
     ];
+    
     $response = wp_remote_post("$api_key/auth", [
         'method'    => 'POST',
         'headers'   => $headers,            
         'timeout'   => 15,                   
     ]);
+
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
         error_log("Request failed: $error_message");
