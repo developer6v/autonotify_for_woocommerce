@@ -1,13 +1,19 @@
 <?php
 
-function getResetPasswordData($user) {
-    
+function getResetPasswordData($user_login, $key) {
+    $user = get_user_by( 'login', $user_login );
     $customer_phone = get_user_meta($user->ID, 'billing_phone', true);
     if (empty($customer_phone)) {
         $customer_phone = get_user_meta($user->ID, 'shipping_phone', true);
     }
 
-    $reset_url = wp_lostpassword_url();
+    $reset_url = add_query_arg(
+        [
+            'key'   => $key,
+            'login' => rawurlencode( $user_login )
+        ],
+        wp_lostpassword_url()
+    );
 
     $address_1 = get_user_meta($user->ID, 'billing_address_1', true);
     $city = get_user_meta($user->ID, 'billing_city', true);
