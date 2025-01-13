@@ -36,7 +36,7 @@ function salvar_carrinho_na_sessao() {
     }
 }
 
-add_action('woocommerce_shutdown', 'verificar_carrinho_abandonado');
+add_action('woocommerce_cleanup_sessions', 'verificar_carrinho_abandonado');
 function verificar_carrinho_abandonado() {
     $carrinho = WC()->session->get('carrinho_abandonado');
     if ($carrinho) {
@@ -44,7 +44,5 @@ function verificar_carrinho_abandonado() {
         file_put_contents(DEBUG_LOG_FILE, $mensagem . PHP_EOL, FILE_APPEND);
     }
 }
-
-
 
 ?>
