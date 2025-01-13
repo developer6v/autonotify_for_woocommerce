@@ -25,7 +25,6 @@ function custom_password_reset_email_sent( $user_login, $key ) {
 // Carrinho Abandonado
 define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 
-// Carrinho Abandonado
 add_action('woocommerce_cart_updated', 'salvar_carrinho_na_sessao');
 function salvar_carrinho_na_sessao() {
     if (WC()->cart && !WC()->cart->is_empty()) {
