@@ -15,10 +15,4 @@ if ( ! wp_next_scheduled( 'check_abandoned_carts' ) ) {
     wp_schedule_event( time(), 'every_20_minutes', 'check_abandoned_carts' );
 }
 
-function cancel_events_duplicated() {
-    wp_clear_scheduled_hook( 'check_abandoned_carts' );
-}
-add_action( 'init', 'cancel_events_duplicated' );
-
-
 ?>
