@@ -32,7 +32,7 @@ function process_abandoned_carts() {
     log_carrinho_abandonado( 12 );
 
     $current_time = time();
-    $cutoff_time = $current_time - ( 20 * MINUTE_IN_SECONDS ); 
+    $cutoff_time = $current_time - ( 10 * MINUTE_IN_SECONDS ); 
 
     $sessions = $wpdb->get_results( 
         $wpdb->prepare(
@@ -45,7 +45,11 @@ function process_abandoned_carts() {
         $cart_data = maybe_unserialize( $session->session_value );
 
         if ( isset( $cart_data['cart'] ) && ! empty( $cart_data['cart'] ) ) {
-            log_carrinho_abandonado( $session->session_id );
+            $cart_items = maybe_unserialize( $cart_data['cart'] );
+
+            if ( ! empty( $cart_items ) ) {
+                log_carrinho_abandonado( "Sessão ID: {$session->session_id} - Carrinho encontrado" );
+            }
         }
     }
 }
