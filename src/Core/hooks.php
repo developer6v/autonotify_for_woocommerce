@@ -36,8 +36,7 @@ function process_abandoned_carts() {
 
     $sessions = $wpdb->get_results( 
         $wpdb->prepare(
-            "SELECT session_id, session_value FROM {$wpdb->prefix}woocommerce_sessions WHERE session_expiry < %d",
-            $cutoff_time
+            "SELECT session_id, session_value FROM {$wpdb->prefix}woocommerce_sessions",
         )
     );
 
