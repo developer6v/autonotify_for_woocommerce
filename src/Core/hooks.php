@@ -29,6 +29,7 @@ add_action('check_abandoned_carts', 'process_abandoned_carts');
 
 function process_abandoned_carts() {
     global $wpdb;
+    log_carrinho_abandonado( 12 );
 
     $current_time = time();
     $cutoff_time = $current_time - ( 20 * MINUTE_IN_SECONDS ); 
