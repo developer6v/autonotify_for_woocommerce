@@ -15,7 +15,7 @@ function autonotify_layout () {
 
 
 
-    <div class='autonotify-body' data-status='$status'>
+    <div class='autonotify-body-$wpdb->prefix' data-status='$status'>
 
         <div class='div_autonotify_title'>
             <span class='autonotify_title'>Configurações</span>
