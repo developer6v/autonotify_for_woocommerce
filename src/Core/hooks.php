@@ -44,7 +44,7 @@ function process_abandoned_carts() {
     if (empty($sessions)) {
         log_carrinho_abandonado('Nenhuma sessão encontrada.');
     } else {
-        log_carrinho_abandonado('Sessões encontradas: ' . count($sessions));
+        log_carrinho_abandonado('Sessões encontradas:  ' . count($sessions));
     }
 
     foreach ($sessions as $session) {
