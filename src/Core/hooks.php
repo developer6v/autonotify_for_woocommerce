@@ -22,6 +22,9 @@ function custom_password_reset_email_sent( $user_login, $key ) {
 }
 
 
+define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
+
+
 // Carrinho Abandonado
 add_action('check_abandoned_carts', 'process_abandoned_carts');
 function process_abandoned_carts() {
