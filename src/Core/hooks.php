@@ -28,7 +28,7 @@ define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 add_action('check_abandoned_carts', 'process_abandoned_carts');
 
 function process_abandoned_carts() {
-    log_carrinho_abandonado('teste' );
+    log_carrinho_abandonado('Iniciando a verificação de carrinhos abandonados.');
     global $wpdb;
 
     $current_time = time();
@@ -41,23 +41,35 @@ function process_abandoned_carts() {
         )
     );
 
-    foreach ( $sessions as $session ) {
-        log_carrinho_abandonado(  $session->session_id );
-        $cart_data = maybe_unserialize( $session->session_value );
+    if (empty($sessions)) {
+        log_carrinho_abandonado('Nenhuma sessão encontrada.');
+    } else {
+        log_carrinho_abandonado('Sessões encontradas: ' . count($sessions));
+    }
 
-        if ( isset( $cart_data['cart'] ) && ! empty( $cart_data['cart'] ) ) {
-            $cart_items = maybe_unserialize( $cart_data['cart'] );
+    foreach ($sessions as $session) {
+        log_carrinho_abandonado('Processando sessão: ' . $session->session_id);
+        $cart_data = maybe_unserialize($session->session_value);
 
-            if ( ! empty( $cart_items ) ) {
-                log_carrinho_abandonado( $session->session_id );
+        if (isset($cart_data['cart']) && !empty($cart_data['cart'])) {
+            log_carrinho_abandonado('Carrinho encontrado na sessão: ' . $session->session_id);
+            $cart_items = maybe_unserialize($cart_data['cart']);
+
+            if (!empty($cart_items)) {
+                log_carrinho_abandonado('Itens no carrinho para a sessão: ' . $session->session_id);
+            } else {
+                log_carrinho_abandonado('Carrinho vazio para a sessão: ' . $session->session_id);
             }
+        } else {
+            log_carrinho_abandonado('Nenhum carrinho encontrado na sessão: ' . $session->session_id);
         }
     }
 }
 
-function log_carrinho_abandonado( $session_id ) {
-    $log_message = "Carrinho abandonado encontrado - Sessão ID: {$session_id}\n";
-    file_put_contents( DEBUG_LOG_FILE, $log_message, FILE_APPEND );
+function log_carrinho_abandonado($message) {
+    $timestamp = date('Y-m-d H:i:s');
+    $log_message = "[{$timestamp}] {$message}\n";
+    file_put_contents(DEBUG_LOG_FILE, $log_message, FILE_APPEND);
 }
 
 ?>
