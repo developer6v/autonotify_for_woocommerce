@@ -23,52 +23,22 @@ function custom_password_reset_email_sent( $user_login, $key ) {
 
 
 // Carrinho Abandonado
-define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
-
 add_action('check_abandoned_carts', 'process_abandoned_carts');
-
 function process_abandoned_carts() {
-    log_carrinho_abandonado('Iniciando a verificação de carrinhos abandonados.');
     global $wpdb;
-
     $current_time = time();
     $cutoff_time = $current_time - ( 10 * MINUTE_IN_SECONDS ); 
-
     $sessions = $wpdb->get_results( 
         $wpdb->prepare(
             "SELECT session_id, session_value FROM {$wpdb->prefix}woocommerce_sessions",
         )
     );
-
-    if (empty($sessions)) {
-        log_carrinho_abandonado('Nenhuma sessão encontrada.');
-    } else {
-        log_carrinho_abandonado('Sessões encontradas:  ' . count($sessions));
-    }
-
     foreach ($sessions as $session) {
-        log_carrinho_abandonado('Processando sessão: ' . $session->session_id);
-        $cart_data = maybe_unserialize($session->session_value);
-
-        if (isset($cart_data['cart']) && !empty($cart_data['cart'])) {
-            log_carrinho_abandonado('Carrinho encontrado na sessão: ' . $session->session_id);
-            $cart_items = maybe_unserialize($cart_data['cart']);
-
-            if (!empty($cart_items)) {
-                log_carrinho_abandonado('Itens no carrinho para a sessão: ' . $session->session_id);
-            } else {
-                log_carrinho_abandonado('Carrinho vazio para a sessão: ' . $session->session_id);
-            }
-        } else {
-            log_carrinho_abandonado('Nenhum carrinho encontrado na sessão: ' . $session->session_id);
-        }
+        $data = getAbandonedCartData($session);
+        file_put_contents(DEBUG_LOG_FILE, json_encode($data), FILE_APPEND);
+        sendAutonotify(['abandoned_cart'], $data);
     }
 }
 
-function log_carrinho_abandonado($message) {
-    $timestamp = date('Y-m-d H:i:s');
-    $log_message = "[{$timestamp}] {$message}\n";
-    file_put_contents(DEBUG_LOG_FILE, $log_message, FILE_APPEND);
-}
 
 ?>
