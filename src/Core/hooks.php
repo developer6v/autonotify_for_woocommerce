@@ -28,6 +28,7 @@ define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 add_action('check_abandoned_carts', 'process_abandoned_carts');
 
 function process_abandoned_carts() {
+    log_carrinho_abandonado('teste' );
     global $wpdb;
     log_carrinho_abandonado( 12 );
 
@@ -48,7 +49,7 @@ function process_abandoned_carts() {
             $cart_items = maybe_unserialize( $cart_data['cart'] );
 
             if ( ! empty( $cart_items ) ) {
-                log_carrinho_abandonado( "Sessão ID: {$session->session_id} - Carrinho encontrado" );
+                log_carrinho_abandonado( $session->session_id );
             }
         }
     }
