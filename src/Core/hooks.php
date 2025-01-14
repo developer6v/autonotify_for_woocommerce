@@ -25,23 +25,33 @@ function custom_password_reset_email_sent( $user_login, $key ) {
 // Carrinho Abandonado
 define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 
-add_action('woocommerce_cart_updated', 'salvar_carrinho_na_sessao');
-function salvar_carrinho_na_sessao() {
-    if (WC()->cart && !WC()->cart->is_empty()) {
-        $cart_contents = WC()->cart->get_cart();
-        WC()->session->set('carrinho_abandonado', json_encode($cart_contents));
-        $mensagem = '[woocommerce_cart_updated] Carrinho atualizado: ' . json_encode($cart_contents);
-        file_put_contents(DEBUG_LOG_FILE, $mensagem . PHP_EOL, FILE_APPEND);
+add_action('check_abandoned_carts', 'process_abandoned_carts');
+
+function process_abandoned_carts() {
+    global $wpdb;
+
+    $current_time = time();
+    $cutoff_time = $current_time - ( 20 * MINUTE_IN_SECONDS ); 
+
+    $sessions = $wpdb->get_results( 
+        $wpdb->prepare(
+            "SELECT session_id, session_value FROM {$wpdb->prefix}woocommerce_sessions WHERE session_expiry < %d",
+            $cutoff_time
+        )
+    );
+
+    foreach ( $sessions as $session ) {
+        $cart_data = maybe_unserialize( $session->session_value );
+
+        if ( isset( $cart_data['cart'] ) && ! empty( $cart_data['cart'] ) ) {
+            log_carrinho_abandonado( $session->session_id );
+        }
     }
 }
 
-add_action('woocommerce_cleanup_sessions', 'verificar_carrinho_abandonado');
-function verificar_carrinho_abandonado() {
-    $carrinho = WC()->session->get('carrinho_abandonado');
-    if ($carrinho) {
-        $mensagem = '[woocommerce_shutdown] Carrinho abandonado detectado: ' . $carrinho;
-        file_put_contents(DEBUG_LOG_FILE, $mensagem . PHP_EOL, FILE_APPEND);
-    }
+function log_carrinho_abandonado( $session_id ) {
+    $log_message = "Carrinho abandonado encontrado - Sessão ID: {$session_id}\n";
+    file_put_contents( DEBUG_LOG_FILE, $log_message, FILE_APPEND );
 }
 
 ?>
