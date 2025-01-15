@@ -10,7 +10,7 @@ function manage_order_status ($order_id, $old_status, $new_status) {
 add_action('woocommerce_checkout_order_created', 'newordermanager', 10, 3);
 function newordermanager ($order) {
     $data = getOrderData($order->get_id());
-    $new_status = $order->get_status();
+    $new_status = $order->get_status(); 
     sendAutonotify([str_replace("-", "_", $new_status), 'new_order_admin'], $data);
 }
 
@@ -37,9 +37,9 @@ function process_abandoned_carts() {
         )
     );
     foreach ($sessions as $session) {
-        file_put_contents(DEBUG_LOG_FILE, 'carrinho abandonado disparado', FILE_APPEND);
+        file_put_contents(DEBUG_LOG_FILE, 'carrinho abandonado disparado');
         $data = getAbandonedCartData($session);
-        file_put_contents(DEBUG_LOG_FILE, json_encode($data), FILE_APPEND);
+        file_put_contents(DEBUG_LOG_FILE, json_encode($data));
         sendAutonotify(['abandoned_cart'], $data);
     }
 }
