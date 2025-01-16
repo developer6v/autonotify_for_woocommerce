@@ -3,7 +3,9 @@
 add_action('woocommerce_order_status_changed', 'manage_order_status', 10, 3);
 function manage_order_status ($order_id, $old_status, $new_status) {
     $data = getOrderData($order_id);
-    sendAutonotify([str_replace("-", "_", $new_status)], $data);
+    $status = str_replace("-", "_", $new_status);
+    $status_admin = $status . "_admin";
+    sendAutonotify([$status, $status_admin], $data);
 }
 
 // Pedido Criado
@@ -24,7 +26,6 @@ function custom_password_reset_email_sent( $user_login, $key ) {
 
 define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 
-
 // Carrinho Abandonado
 add_action('check_abandoned_carts', 'process_abandoned_carts');
 function process_abandoned_carts() {
@@ -43,4 +44,5 @@ function process_abandoned_carts() {
         sendAutonotify(['abandoned_cart'], $data);
     }
 }
+
 ?>
