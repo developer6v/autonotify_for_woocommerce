@@ -1,4 +1,8 @@
 <?php
+
+define('DEBUG_LOG_FILE_STATUS', WP_CONTENT_DIR . '/debug-order.log');
+
+
 // Mudança de Status de Pedido
 add_action('woocommerce_order_status_changed', 'manage_order_status', 10, 3);
 function manage_order_status ($order_id, $old_status, $new_status) {
@@ -6,6 +10,7 @@ function manage_order_status ($order_id, $old_status, $new_status) {
     $status = str_replace("-", "_", $new_status);
     $status_admin = $status . "_admin";
     sendAutonotify([$status, $status_admin], $data);
+    file_put_contents(DEBUG_LOG_FILE, json_encode($data));
 }
 
 // Pedido Criado
@@ -14,6 +19,7 @@ function newordermanager ($order) {
     $data = getOrderData($order->get_id());
     $new_status = $order->get_status(); 
     sendAutonotify([str_replace("-", "_", $new_status), 'new_order_admin'], $data);
+    file_put_contents(DEBUG_LOG_FILE, json_encode($data));
 }
 
 // Senha trocada
@@ -21,6 +27,7 @@ add_action( 'woocommerce_reset_password_notification', 'custom_password_reset_em
 function custom_password_reset_email_sent( $user_login, $key ) {
     $data = getResetPasswordData ($user_login, $key);
     sendAutonotify(['password_reset'], $data);
+    file_put_contents(DEBUG_LOG_FILE, json_encode($data));
 }
 
 
