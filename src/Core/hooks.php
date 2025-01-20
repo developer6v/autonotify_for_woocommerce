@@ -45,7 +45,6 @@ function process_abandoned_carts() {
         )
     );
     foreach ($sessions as $session) {
-        file_put_contents(DEBUG_LOG_FILE, 'carrinho abandonado disparado');
         $data = getAbandonedCartData($session);
         file_put_contents(DEBUG_LOG_FILE, json_encode($data));
         sendAutonotify(['abandoned_cart'], $data);
