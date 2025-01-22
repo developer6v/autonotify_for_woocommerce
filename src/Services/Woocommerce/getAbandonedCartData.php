@@ -8,6 +8,7 @@ function getAbandonedCartData($session) {
         "customername" => "",
         "customeremail" => "",
         "customerphone" => "",
+        "phone" => "",
         "customerid" => "",
         "date" => date('Y-m-d'),
         "hour" => date('H:i:s'),
@@ -23,6 +24,7 @@ function getAbandonedCartData($session) {
         $data['customername'] = trim(($customer['first_name'] ?? '') . ' ' . ($customer['last_name'] ?? ''));
         $data['customeremail'] = $customer['email'] ?? 'Email não informado';
         $data['customerphone'] = $customer['phone'] ?? 'Telefone não informado';
+        $data['phone'] = $customer['phone'] ?? 'Telefone não informado';
         $data['customerid'] = $customer['id'] ?? 'ID não disponível';
     }
 
