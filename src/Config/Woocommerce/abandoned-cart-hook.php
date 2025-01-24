@@ -169,7 +169,7 @@ add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
 function handle_abandoned_cart($cart) {
     file_put_contents ('debug-carrinho-teste.log', json_encode ($cart));
     // Aqui você pode adicionar sua lógica personalizada
-    // Por exemplo, enviar email, notificação, etc.
+    /* Por exemplo, enviar email, notificação, etc.
     
     // Exemplo de envio de email
     $to = $cart->user_email;
@@ -182,5 +182,5 @@ function handle_abandoned_cart($cart) {
         wc_get_cart_url()
     );
     
-    wp_mail($to, $subject, $message);
+    wp_mail($to, $subject, $message);*/
 }
