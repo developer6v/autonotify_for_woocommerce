@@ -31,12 +31,10 @@ class WC_Abandoned_Cart_Hook {
     
     public function create_abandoned_cart_table() {
         global $wpdb;
-        
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         $charset_collate = $wpdb->get_charset_collate();
         if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
 
-            
             $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                 id bigint(20) NOT NULL AUTO_INCREMENT,
                 user_id bigint(20),
@@ -169,6 +167,7 @@ new WC_Abandoned_Cart_Hook();
 // Exemplo de uso do hook
 add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
 function handle_abandoned_cart($cart) {
+    file_put_contents ('debug-carrinho-teste.log', json_encode ($cart));
     // Aqui você pode adicionar sua lógica personalizada
     // Por exemplo, enviar email, notificação, etc.
     
