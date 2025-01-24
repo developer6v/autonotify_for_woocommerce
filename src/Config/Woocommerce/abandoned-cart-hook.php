@@ -8,7 +8,7 @@ class WC_Abandoned_Cart_Hook {
     
     public function __construct() {
         // Criar tabela para carrinhos abandonados
-        create_abandoned_cart_table();
+        $this->create_abandoned_cart_table();
         
         // Hooks para monitorar atividade do carrinho
         add_action('woocommerce_add_to_cart', array($this, 'track_cart_started'), 10, 6);
