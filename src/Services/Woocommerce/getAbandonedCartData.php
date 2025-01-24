@@ -3,7 +3,7 @@
 function getAbandonedCartData($session) {
     $cart_data = maybe_unserialize($session->session_value);
 
-    $data = [
+    $data = [ 
         "address" => "",
         "customername" => "",
         "customeremail" => "",
@@ -32,7 +32,7 @@ function getAbandonedCartData($session) {
         $cart_totals = maybe_unserialize($cart_data['cart_totals']);
 
         if (isset($cart_totals['total'])) {
-            $data['cart_value'] = $cart_totals['total'];
+            $data['cart_value'] = number_format ($cart_totals['total'], 2, ',', '.');
         }
     }
 
@@ -64,7 +64,7 @@ function format_cart_products($cart_items) {
     $products = [];
     foreach ($cart_items as $item) {
         if (isset($item['product_id'])) {
-            $products[] = 'Produto ID: ' . $item['product_id'] . ', Quantidade: ' . $item['quantity'];
+            $products[] = $item['quantity'] . " " . $item['data']->get_name();
         }
     }
     return implode(", ", $products);
