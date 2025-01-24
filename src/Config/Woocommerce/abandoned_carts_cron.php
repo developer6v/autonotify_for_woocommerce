@@ -11,7 +11,7 @@ function twenty_min_personalized( $schedules ) {
 }
 
 
-if ( ! wp_next_scheduled( 'check_abandoned_carts' ) ) {
+if ( wp_next_scheduled( 'check_abandoned_carts' ) ) {
     wp_schedule_event( time(), 'every_20_minutes', 'check_abandoned_carts' );
 }
 
