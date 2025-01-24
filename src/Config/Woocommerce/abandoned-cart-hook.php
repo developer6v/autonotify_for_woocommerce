@@ -8,7 +8,7 @@ class WC_Abandoned_Cart_Hook {
     
     public function __construct() {
         // Criar tabela para carrinhos abandonados
-        register_activation_hook(__FILE__, array($this, 'create_abandoned_cart_table'));
+        create_abandoned_cart_table();
         
         // Hooks para monitorar atividade do carrinho
         add_action('woocommerce_add_to_cart', array($this, 'track_cart_started'), 10, 6);
@@ -34,21 +34,24 @@ class WC_Abandoned_Cart_Hook {
         
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         $charset_collate = $wpdb->get_charset_collate();
-        
-        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            user_id bigint(20),
-            user_email varchar(100),
-            cart_contents longtext,
-            cart_total decimal(10,2),
-            created_at datetime DEFAULT CURRENT_TIMESTAMP,
-            last_updated datetime DEFAULT CURRENT_TIMESTAMP,
-            recovered boolean DEFAULT 0,
-            PRIMARY KEY  (id)
-        ) $charset_collate;";
-        
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
+        if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+
+            
+            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+                id bigint(20) NOT NULL AUTO_INCREMENT,
+                user_id bigint(20),
+                user_email varchar(100),
+                cart_contents longtext,
+                cart_total decimal(10,2),
+                created_at datetime DEFAULT CURRENT_TIMESTAMP,
+                last_updated datetime DEFAULT CURRENT_TIMESTAMP,
+                recovered boolean DEFAULT 0,
+                PRIMARY KEY  (id)
+            ) $charset_collate;";
+            
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            dbDelta($sql);
+        }
     }
     
     public function track_cart_started($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
