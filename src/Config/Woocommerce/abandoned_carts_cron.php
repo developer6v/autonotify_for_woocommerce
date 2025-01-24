@@ -4,7 +4,7 @@ add_filter( 'cron_schedules', 'twenty_min_personalized' );
 
 function twenty_min_personalized( $schedules ) {
     $schedules['every_20_minutes'] = array(
-        'interval' => 5 * MINUTE_IN_SECONDS, 
+        'interval' => 1 * MINUTE_IN_SECONDS, 
         'display'  => __( 'A cada 20 minutos' )
     );
     return $schedules;

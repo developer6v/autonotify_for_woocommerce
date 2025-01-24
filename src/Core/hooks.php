@@ -43,8 +43,7 @@ function process_abandoned_carts() {
     $sessions = $wpdb->get_results( 
         $wpdb->prepare(
             "SELECT session_id, session_value FROM {$wpdb->prefix}woocommerce_sessions",
-        )
-    );
+    ));
     foreach ($sessions as $session) {
         $data = getAbandonedCartData($session);
         file_put_contents(DEBUG_LOG_FILE, json_encode($data));
