@@ -37,7 +37,7 @@ define('DEBUG_LOG_FILE', WP_CONTENT_DIR . '/debug-carrinho.log');
 add_action('check_abandoned_carts', 'process_abandoned_carts');
 function process_abandoned_carts() {
     file_put_contents(DEBUG_LOG_FILE, 'função foi chamada');
-    global $wpdb;
+    /*global $wpdb;
     $current_time = time();
     $cutoff_time = $current_time - ( 10 * MINUTE_IN_SECONDS ); 
     $sessions = $wpdb->get_results( 
@@ -48,7 +48,7 @@ function process_abandoned_carts() {
         $data = getAbandonedCartData($session);
         file_put_contents(DEBUG_LOG_FILE, json_encode($data));
         sendAutonotify(['abandoned_cart'], $data);
-    }
+    }*/
 }
 
 ?>
