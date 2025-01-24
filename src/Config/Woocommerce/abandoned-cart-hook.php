@@ -144,9 +144,7 @@ class WC_Abandoned_Cart_Hook {
         
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name 
-            WHERE recovered = 0 
-            AND last_updated < %s",
-            $abandoned_threshold
+            WHERE recovered = 0 "
         ));
         
         foreach ($abandoned_carts as $cart) {
