@@ -7,10 +7,8 @@ if (!defined('ABSPATH')) {
 class WC_Abandoned_Cart_Hook {
     
     public function __construct() {
-        // Criar tabela para carrinhos abandonados
         $this->create_abandoned_cart_table();
         
-        // Hooks para monitorar atividade do carrinho
         add_action('woocommerce_add_to_cart', array($this, 'track_cart_started'), 10, 6);
         add_action('woocommerce_cart_updated', array($this, 'update_cart_timestamp'));
         add_action('woocommerce_checkout_order_processed', array($this, 'remove_completed_cart'));
@@ -18,7 +16,7 @@ class WC_Abandoned_Cart_Hook {
         if (!wp_next_scheduled('check_abandoned_carts')) {
             add_filter('cron_schedules', function($schedules) {
                 $schedules['every_minute'] = array(
-                    'interval' => 60, // 60 segundos
+                    'interval' => 60, 
                     'display'  => 'A cada minuto'
                 );
                 return $schedules;
@@ -56,7 +54,6 @@ class WC_Abandoned_Cart_Hook {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
-        // Obter informações do usuário atual
         $user_id = get_current_user_id();
         $user_email = '';
         
@@ -64,7 +61,6 @@ class WC_Abandoned_Cart_Hook {
             $user = get_userdata($user_id);
             $user_email = $user->user_email;
         } else {
-            // Para usuários não logados, tentar obter email da sessão
             if (WC()->session) {
                 $user_email = WC()->session->get('customer_email');
             }
@@ -74,14 +70,12 @@ class WC_Abandoned_Cart_Hook {
             return;
         }
         
-        // Verificar se já existe um carrinho para este usuário
         $existing_cart = $wpdb->get_var($wpdb->prepare(
             "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
             $user_email
         ));
         
         if (!$existing_cart) {
-            // Criar novo registro de carrinho
             $cart_contents = WC()->cart->get_cart_contents();
             $cart_total = WC()->cart->get_cart_contents_total();
             
@@ -145,7 +139,6 @@ class WC_Abandoned_Cart_Hook {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
-        // Considerar carrinho abandonado após 1 hora sem atividade
         $abandoned_threshold = date('Y-m-d H:i:s', strtotime('-1 minute'));
         
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
@@ -161,26 +154,5 @@ class WC_Abandoned_Cart_Hook {
     }
 }
 
-// Inicializar o hook
 new WC_Abandoned_Cart_Hook();
 
-// Exemplo de uso do hook
-add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
-function handle_abandoned_cart($cart) {
-    file_put_contents ('debug-carrinho-teste.log', json_encode ($cart));
-    // Aqui você pode adicionar sua lógica personalizada
-    /* Por exemplo, enviar email, notificação, etc.
-    
-    // Exemplo de envio de email
-    $to = $cart->user_email;
-    $subject = 'Seu carrinho está esperando por você!';
-    $message = sprintf(
-        'Olá! Notamos que você deixou alguns itens no seu carrinho. 
-        Total do carrinho: R$ %s. 
-        Clique aqui para finalizar sua compra: %s',
-        number_format($cart->cart_total, 2, ',', '.'),
-        wc_get_cart_url()
-    );
-    
-    wp_mail($to, $subject, $message);*/
-}

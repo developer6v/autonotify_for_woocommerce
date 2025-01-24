@@ -26,6 +26,25 @@ function custom_password_reset_email_sent( $user_login, $key ) {
     sendAutonotify(['password_reset'], $data);
 }
 
+// Carrinho Abandonado
+add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
+function handle_abandoned_cart($cart) {
+    file_put_contents ('debug-carrinho-teste.log', json_encode ($cart));
+    // Aqui você pode adicionar sua lógica personalizada
+    /* Por exemplo, enviar email, notificação, etc.
+    
+    // Exemplo de envio de email
+    $to = $cart->user_email;
+    $subject = 'Seu carrinho está esperando por você!';
+    $message = sprintf(
+        'Olá! Notamos que você deixou alguns itens no seu carrinho. 
+        Total do carrinho: R$ %s. 
+        Clique aqui para finalizar sua compra: %s',
+        number_format($cart->cart_total, 2, ',', '.'),
+        wc_get_cart_url()
+    );
+    wp_mail($to, $subject, $message);*/
+}
 
 
 ?>
