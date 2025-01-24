@@ -11,7 +11,7 @@ class WC_Abandoned_Cart_Hook {
         
         add_action('woocommerce_add_to_cart', array($this, 'track_cart_started'), 10, 6);
         add_action('woocommerce_cart_updated', array($this, 'update_cart_timestamp'));
-        add_action('woocommerce_checkout_order_processed', array($this, 'remove_completed_cart'));
+        add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
         
         if (!wp_next_scheduled('check_abandoned_carts')) {
             add_filter('cron_schedules', function($schedules) {
