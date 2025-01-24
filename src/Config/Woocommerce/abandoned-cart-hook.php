@@ -90,7 +90,7 @@ class WC_Abandoned_Cart_Hook {
                 array(
                     'user_id' => $user_id,
                     'user_email' => $user_email,
-                    'cart_contents' => serialize($cart_contents),
+                    'cart_contents' => json_encode($cart_contents),
                     'cart_total' => $cart_total
                 ),
                 array('%d', '%s', '%s', '%f')
