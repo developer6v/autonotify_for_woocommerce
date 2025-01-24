@@ -16,16 +16,17 @@ class WC_Abandoned_Cart_Hook {
         add_action('woocommerce_checkout_order_processed', array($this, 'remove_completed_cart'));
         
         if (!wp_next_scheduled('check_abandoned_carts')) {
-            // Registrar novo intervalo de tempo
-        add_filter('cron_schedules', function($schedules) {
-            $schedules['every_minute'] = array(
-                'interval' => 60, // 60 segundos
-                'display'  => 'A cada minuto'
-            );
-            return $schedules;
-        });
-
-        wp_schedule_event(time(), 'every_minute', 'check_abandoned_carts');
+            add_filter('cron_schedules', function($schedules) {
+                $schedules['every_minute'] = array(
+                    'interval' => 60, // 60 segundos
+                    'display'  => 'A cada minuto'
+                );
+                return $schedules;
+            });
+            
+            wp_schedule_event(time(), 'every_minute', 'check_abandoned_carts');
+        }
+        add_action('check_abandoned_carts', array($this, 'process_abandoned_carts'));
     }
     
     public function create_abandoned_cart_table() {
@@ -165,8 +166,7 @@ new WC_Abandoned_Cart_Hook();
 // Exemplo de uso do hook
 add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
 function handle_abandoned_cart($cart) {
-    file_put_contents('debug.txt', 'carrinho chegou: ' . json_encode($cart, JSON_PRETTY_PRINT));
-    /* Aqui você pode adicionar sua lógica personalizada
+    // Aqui você pode adicionar sua lógica personalizada
     // Por exemplo, enviar email, notificação, etc.
     
     // Exemplo de envio de email
@@ -180,5 +180,5 @@ function handle_abandoned_cart($cart) {
         wc_get_cart_url()
     );
     
-    wp_mail($to, $subject, $message);*/
+    wp_mail($to, $subject, $message);
 }
