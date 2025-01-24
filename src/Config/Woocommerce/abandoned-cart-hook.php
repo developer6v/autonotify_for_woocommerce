@@ -122,15 +122,16 @@ class WC_Abandoned_Cart_Hook {
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
         $order = wc_get_order($order_id);
+        $user_id = $order->get_user_id();
         if ($order) {
             $user_email = $order->get_billing_email();
             
             $wpdb->update(
                 $table_name,
                 array('recovered' => 1),
-                array('user_email' => $user_email, 'recovered' => 0),
+                array('user_id' => $user_id, 'recovered' => 0),
                 array('%d'),
-                array('%s', '%d')
+                array('%d', '%d')
             );
         }
     }
