@@ -12,6 +12,6 @@ require_once dirname(__FILE__) . '/../Core/hooks.php';
 require_once dirname(__FILE__) . '/../Services/index.php';
 
 // Woocommerce
-require_once 'Woocommerce/abandoned_carts_cron.php';
+require_once 'Woocommerce/abandoned-cart-hook.php';
 
 ?>
