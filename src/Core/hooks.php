@@ -31,6 +31,7 @@ add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
 function handle_abandoned_cart($cart) {
     file_put_contents ('debug-carrinho-teste.log', json_encode ($cart));
     $data = getAbandonedCartData ($cart);
+    file_put_contents ('data-debug-carrinho-teste.log', json_encode ($data));
     sendAutonotify(['abandoned_cart'], $data);
 }
 
