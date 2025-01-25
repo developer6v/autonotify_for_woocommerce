@@ -39,6 +39,7 @@ function getAbandonedCartData($cart) {
                        $user->get_billing_postcode();
         }
     }
+    file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart1' . PHP_EOL, FILE_APPEND);
 
     // Gerar a URL do carrinho com base nos produtos
     $base_url = home_url('/'); // Base para a URL do carrinho
