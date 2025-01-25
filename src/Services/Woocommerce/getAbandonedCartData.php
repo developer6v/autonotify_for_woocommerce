@@ -22,16 +22,16 @@ function getAbandonedCartData($cart) {
     $customerPhone = '';
     $address = '';
     if ($customerId) {
-        $user = get_userdata($customerId);
+        $user = new WC_Customer($customerId); // Usar WC_Customer para acessar dados do cliente
         if ($user) {
-            $customerName = $user->first_name . ' ' . $user->last_name;
-            $customerEmail = $customerEmail ?: $user->user_email;
+            $customerName = $user->get_first_name() . ' ' . $user->get_last_name();
+            $customerEmail = $customerEmail ?: $user->get_email();
 
-            $customerPhone = get_user_meta($customerId, 'billing_phone', true);
-            $address = get_user_meta($customerId, 'billing_address_1', true) . ', ' .
-                       get_user_meta($customerId, 'billing_city', true) . ', ' .
-                       get_user_meta($customerId, 'billing_state', true) . ' - ' .
-                       get_user_meta($customerId, 'billing_postcode', true);
+            $customerPhone = $user->get_billing_phone();
+            $address = $user->get_billing_address_1() . ', ' .
+                       $user->get_billing_city() . ', ' .
+                       $user->get_billing_state() . ' - ' .
+                       $user->get_billing_postcode();
         }
     }
 

@@ -13,7 +13,7 @@ class WC_Abandoned_Cart_Hook {
         add_action('woocommerce_cart_updated', array($this, 'update_cart_timestamp'));
         add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
         
-        //if (!wp_next_scheduled('check_abandoned_carts')) {
+        if (!wp_next_scheduled('check_abandoned_carts')) {
             add_filter('cron_schedules', function($schedules) {
                 $schedules['every_minute'] = array(
                     'interval' => 60, 
@@ -23,7 +23,7 @@ class WC_Abandoned_Cart_Hook {
             });
             
             wp_schedule_event(time(), 'every_minute', 'check_abandoned_carts');
-        //}
+        }
         add_action('check_abandoned_carts', array($this, 'process_abandoned_carts'));
     }
     
