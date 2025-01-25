@@ -1,5 +1,10 @@
 <?php
 
+ini_set('log_errors', 'On');
+ini_set('error_log', $logFile);
+ini_set('display_errors', 'On'); 
+error_reporting(E_ALL);
+
 function getAbandonedCartData($cart) {
     file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart' . PHP_EOL, FILE_APPEND);
     $customerId = $cart['user_id'] ?? null;
