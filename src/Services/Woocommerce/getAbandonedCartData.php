@@ -1,6 +1,7 @@
 <?php
 
 function getAbandonedCartData($cart) {
+    file_put_contents ('debug-carrinho-teste.log', 'getAbandonedCart', FILE_APPEND);
     $customerId = $cart['user_id'] ?? null;
     $customerEmail = $cart['user_email'] ?? '';
     $cartValue = $cart['cart_total'] ?? '';

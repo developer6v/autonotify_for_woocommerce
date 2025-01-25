@@ -28,13 +28,11 @@ function sendAutonotify($hook, $data) {
     $log_file = __DIR__ . '/debug.txt'; 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
-        file_put_contents($log_file, "Request failed: $error_message" . PHP_EOL, FILE_APPEND); // Log de erro
+        file_put_contents($log_file, "Request failed: $error_message" . PHP_EOL, FILE_APPEND); 
         error_log("Request failed: $error_message");
     } else { 
-        $response_body = wp_remote_retrieve_body($response);
-        
+        $response_body = wp_remote_retrieve_body($response);        
         file_put_contents($log_file, "Response: $response_body" . PHP_EOL, FILE_APPEND);
-        
         return $response_body;
     }
 }
