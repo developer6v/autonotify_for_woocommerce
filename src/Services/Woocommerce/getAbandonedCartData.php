@@ -8,6 +8,8 @@ error_reporting(E_ALL);
 function getAbandonedCartData($cart) {
     file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart' . PHP_EOL, FILE_APPEND);
     $customerId = $cart['user_id'] ?? null;
+    file_put_contents('customerid: ', $customerId . PHP_EOL, FILE_APPEND);
+
     $customerEmail = $cart['user_email'] ?? '';
     $cartValue = $cart['cart_total'] ?? '';
     $cartContents = !empty($cart['cart_contents']) ? json_decode($cart['cart_contents'], true) : [];
