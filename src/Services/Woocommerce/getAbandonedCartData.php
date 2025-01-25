@@ -8,7 +8,6 @@ function getAbandonedCartData($cart) {
     $cartContents = !empty($cart['cart_contents']) ? json_decode($cart['cart_contents'], true) : [];
     $products = [];
     
-    // Extrair informações do carrinho
     if (!empty($cartContents)) {
         foreach ($cartContents as $item) {
             $products[] = [
@@ -23,7 +22,7 @@ function getAbandonedCartData($cart) {
     $customerPhone = '';
     $address = '';
     if ($customerId) {
-        $user = new WC_Customer($customerId); // Usar WC_Customer para acessar dados do cliente
+        $user = new WC_Customer($customerId); 
         if ($user) {
             $customerName = $user->get_first_name() . ' ' . $user->get_last_name();
             $customerEmail = $customerEmail ?: $user->get_email();
