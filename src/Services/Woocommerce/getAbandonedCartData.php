@@ -1,75 +1,66 @@
 <?php
 
-function getAbandonedCartData($session) {
-    $cart_data = maybe_unserialize($session->session_value);
+function getAbandonedCartData($cart) {
+    $customerId = $cart['user_id'] ?? null;
+    $customerEmail = $cart['user_email'] ?? '';
+    $cartValue = $cart['cart_total'] ?? '';
+    $cartContents = !empty($cart['cart_contents']) ? json_decode($cart['cart_contents'], true) : [];
+    $products = [];
+    
+    // Extrair informações do carrinho
+    if (!empty($cartContents)) {
+        foreach ($cartContents as $item) {
+            $products[] = [
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'line_total' => $item['line_total']
+            ];
+        }
+    }
 
+    $customerName = '';
+    $customerPhone = '';
+    $address = '';
+    if ($customerId) {
+        $user = get_userdata($customerId);
+        if ($user) {
+            $customerName = $user->first_name . ' ' . $user->last_name;
+            $customerEmail = $customerEmail ?: $user->user_email;
+
+            $customerPhone = get_user_meta($customerId, 'billing_phone', true);
+            $address = get_user_meta($customerId, 'billing_address_1', true) . ', ' .
+                       get_user_meta($customerId, 'billing_city', true) . ', ' .
+                       get_user_meta($customerId, 'billing_state', true) . ' - ' .
+                       get_user_meta($customerId, 'billing_postcode', true);
+        }
+    }
+
+    // Gerar a URL do carrinho com base nos produtos
+    $base_url = home_url('/'); // Base para a URL do carrinho
+    $url_params = '';
+
+    if (!empty($products)) {
+        foreach ($products as $product) {
+            $url_params .= '&add-to-cart=' . $product['product_id'] . '&quantity=' . $product['quantity'];
+        }
+    }
+
+    $cartUrl = $base_url . '?' . ltrim($url_params, '&');
+
+    // Montar os dados finais do carrinho
     $data = [ 
-        "address" => "",
-        "customername" => "",
-        "customeremail" => "",
-        "customerphone" => "",
-        "phone" => "",
-        "customerid" => "",
-        "date" => date('Y-m-d'),
-        "hour" => date('H:i:s'),
-        "cart_url" => "",
-        "cart_value" => "",
-        "order_products" => "",
+        "address" => $address,
+        "customername" => $customerName,
+        "customeremail" => $customerEmail,
+        "customerphone" => $customerPhone,
+        "phone" => $customerPhone, 
+        "customerid" => $customerId,
+        "date" => date('Y-m-d', strtotime($cart['created_at'])),
+        "hour" => date('H:i:s', strtotime($cart['created_at'])),
+        "cart_url" => $cartUrl,
+        "cart_value" => $cartValue,
+        "order_products" => $products,
     ];
-
-    if (isset($cart_data['customer']) && is_array($cart_data['customer'])) {
-        $customer = $cart_data['customer'];
-
-        $data['address'] = $customer['address_1'] ?? 'Endereço não informado';
-        $data['customername'] = trim(($customer['first_name'] ?? '') . ' ' . ($customer['last_name'] ?? ''));
-        $data['customeremail'] = $customer['email'] ?? 'Email não informado';
-        $data['customerphone'] = $customer['phone'] ?? 'Telefone não informado';
-        $data['phone'] = $customer['phone'] ?? 'Telefone não informado';
-        $data['customerid'] = $customer['id'] ?? 'ID não disponível';
-    }
-
-    if (isset($cart_data['cart_totals']) && is_string($cart_data['cart_totals'])) {
-        $cart_totals = maybe_unserialize($cart_data['cart_totals']);
-
-        if (isset($cart_totals['total'])) {
-            $data['cart_value'] = number_format ($cart_totals['total'], 2, ',', '.');
-        }
-    }
-
-    if (isset($cart_data['cart']) && is_string($cart_data['cart'])) {
-        $cart_items = maybe_unserialize($cart_data['cart']);
-        if (is_array($cart_items)) {
-            $data['cart_url'] = generate_cart_url($cart_items);
-            $data['order_products'] = format_cart_products($cart_items);
-        }
-    }
 
     return $data;
 }
-
-function generate_cart_url($cart_items) {
-    $base_url = get_site_url() . '/checkout/'; 
-    $url_params = '';
-
-    foreach ($cart_items as $item) {
-        if (isset($item['product_id']) && isset($item['quantity'])) {
-            $url_params .= '&add-to-cart=' . $item['product_id'] . '&quantity=' . $item['quantity'];
-        }
-    }
-
-    return $base_url . '?' . ltrim($url_params, '&');
-}
-
-function format_cart_products($cart_items) {
-    $products = [];
-    foreach ($cart_items as $item) {
-        if (isset($item['product_id'])) {
-            $products[] = $item['quantity'] . " " . $item['data']->get_name();
-        }
-    }
-    return implode(", ", $products);
-}
-
-
-
-
