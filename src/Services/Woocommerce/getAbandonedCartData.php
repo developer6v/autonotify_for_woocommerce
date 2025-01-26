@@ -2,17 +2,17 @@
 
 ini_set('log_errors', 'On');
 ini_set('error_log', $logFile);
-ini_set('display_errors', 'On'); 
+ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 function getAbandonedCartData($cart) {
     file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart' . PHP_EOL, FILE_APPEND);
-    $customerId = $cart->user_id ?? null;
-    file_put_contents('customerid: ', $customerId . PHP_EOL, FILE_APPEND);
 
-    $customerEmail = $cart['user_email'] ?? '';
-    $cartValue = $cart['cart_total'] ?? '';
-    $cartContents = !empty($cart['cart_contents']) ? json_decode($cart['cart_contents'], true) : [];
+    // Acessando as propriedades do objeto com `->`
+    $customerId = $cart->user_id ?? null;
+    $customerEmail = $cart->user_email ?? '';
+    $cartValue = $cart->cart_total ?? '';
+    $cartContents = !empty($cart->cart_contents) ? json_decode($cart->cart_contents, true) : [];
     $products = [];
     
     if (!empty($cartContents)) {
@@ -24,14 +24,14 @@ function getAbandonedCartData($cart) {
             ];
         }
     }
-    file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart1' . PHP_EOL, FILE_APPEND);
 
+    file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart1' . PHP_EOL, FILE_APPEND);
 
     $customerName = '';
     $customerPhone = '';
     $address = '';
     if ($customerId) {
-        $user = new WC_Customer($customerId); 
+        $user = new WC_Customer($customerId);
         if ($user) {
             $customerName = $user->get_first_name() . ' ' . $user->get_last_name();
             $customerEmail = $customerEmail ?: $user->get_email();
@@ -56,16 +56,21 @@ function getAbandonedCartData($cart) {
 
     $cartUrl = $base_url . '?' . ltrim($url_params, '&');
 
+    // Verificar e tratar o campo 'created_at' como objeto
+    $createdAt = $cart->created_at ?? null;
+    $date = $createdAt ? date('Y-m-d', strtotime($createdAt)) : '';
+    $hour = $createdAt ? date('H:i:s', strtotime($createdAt)) : '';
+
     // Montar os dados finais do carrinho
-    $data = [ 
+    $data = [
         "address" => $address,
         "customername" => $customerName,
         "customeremail" => $customerEmail,
         "customerphone" => $customerPhone,
-        "phone" => $customerPhone, 
+        "phone" => $customerPhone,
         "customerid" => $customerId,
-        "date" => date('Y-m-d', strtotime($cart['created_at'])),
-        "hour" => date('H:i:s', strtotime($cart['created_at'])),
+        "date" => $date,
+        "hour" => $hour,
         "cart_url" => $cartUrl,
         "cart_value" => $cartValue,
         "order_products" => $products,
