@@ -6,26 +6,36 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 function getAbandonedCartData($cart) {
-    file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart' . PHP_EOL, FILE_APPEND);
 
-    // Acessando as propriedades do objeto com `->`
     $customerId = $cart->user_id ?? null;
     $customerEmail = $cart->user_email ?? '';
     $cartValue = $cart->cart_total ?? '';
     $cartContents = !empty($cart->cart_contents) ? json_decode($cart->cart_contents, true) : [];
     $products = [];
-    
+    $orderProductsString = '';
+
     if (!empty($cartContents)) {
         foreach ($cartContents as $item) {
+            $productId = $item['product_id'] ?? 0;
+            $quantity = $item['quantity'] ?? 1;
+
+            $productName = '';
+            if ($productId) {
+                $product = wc_get_product($productId); 
+                $productName = $product ? $product->get_name() : 'Produto Desconhecido';
+            }
+
             $products[] = [
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'line_total' => $item['line_total']
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'line_total' => $item['line_total'] ?? 0,
             ];
+
+            $orderProductsString .= $quantity . 'x ' . $productName . ', ';
         }
+        $orderProductsString = rtrim($orderProductsString, ', ');
     }
 
-    file_put_contents('debug-carrinho-teste.log', 'getAbandonedCart1' . PHP_EOL, FILE_APPEND);
 
     $customerName = '';
     $customerPhone = '';
@@ -44,8 +54,7 @@ function getAbandonedCartData($cart) {
         }
     }
 
-    // Gerar a URL do carrinho com base nos produtos
-    $base_url = home_url('/'); // Base para a URL do carrinho
+    $base_url = home_url('/'); 
     $url_params = '';
 
     if (!empty($products)) {
@@ -56,12 +65,10 @@ function getAbandonedCartData($cart) {
 
     $cartUrl = $base_url . '?' . ltrim($url_params, '&');
 
-    // Verificar e tratar o campo 'created_at' como objeto
     $createdAt = $cart->created_at ?? null;
     $date = $createdAt ? date('Y-m-d', strtotime($createdAt)) : '';
     $hour = $createdAt ? date('H:i:s', strtotime($createdAt)) : '';
 
-    // Montar os dados finais do carrinho
     $data = [
         "address" => $address,
         "customername" => $customerName,
@@ -73,7 +80,7 @@ function getAbandonedCartData($cart) {
         "hour" => $hour,
         "cart_url" => $cartUrl,
         "cart_value" => $cartValue,
-        "order_products" => $products,
+        "order_products" => $orderProductsString, 
     ];
 
     return $data;
