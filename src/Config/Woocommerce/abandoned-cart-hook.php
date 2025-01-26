@@ -9,8 +9,7 @@ class WC_Abandoned_Cart_Hook {
     public function __construct() {
         $this->create_abandoned_cart_table();
         
-        add_action('woocommerce_add_to_cart', array($this, 'track_cart_started'), 10, 6);
-        add_action('woocommerce_cart_updated', array($this, 'update_cart_timestamp'));
+        add_action('woocommerce_before_checkout_form', array($this, 'track_cart_on_checkout'));
         add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
         
         if (!wp_next_scheduled('check_abandoned_carts')) {
@@ -40,7 +39,7 @@ class WC_Abandoned_Cart_Hook {
                 cart_contents longtext,
                 cart_total decimal(10,2),
                 created_at datetime DEFAULT CURRENT_TIMESTAMP,
-                last_updated datetime DEFAULT CURRENT_TIMESTAMP,
+                last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 recovered boolean DEFAULT 0,
                 PRIMARY KEY  (id)
             ) $charset_collate;";
@@ -50,7 +49,7 @@ class WC_Abandoned_Cart_Hook {
         }
     }
     
-    public function track_cart_started($cart_item_key, $product_id, $quantity, $variation_id, $variation, $cart_item_data) {
+    public function track_cart_on_checkout() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
@@ -70,15 +69,26 @@ class WC_Abandoned_Cart_Hook {
             return;
         }
         
+        $cart_contents = WC()->cart->get_cart_contents();
+        $cart_total = WC()->cart->get_cart_contents_total();
+        
         $existing_cart = $wpdb->get_var($wpdb->prepare(
             "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
             $user_email
         ));
         
-        if (!$existing_cart) {
-            $cart_contents = WC()->cart->get_cart_contents();
-            $cart_total = WC()->cart->get_cart_contents_total();
-            
+        if ($existing_cart) {
+            $wpdb->update(
+                $table_name,
+                array(
+                    'cart_contents' => json_encode($cart_contents),
+                    'cart_total' => $cart_total,
+                ),
+                array('id' => $existing_cart),
+                array('%s', '%f'),
+                array('%d')
+            );
+        } else {
             $wpdb->insert(
                 $table_name,
                 array(
@@ -88,31 +98,6 @@ class WC_Abandoned_Cart_Hook {
                     'cart_total' => $cart_total
                 ),
                 array('%d', '%s', '%s', '%f')
-            );
-        }
-    }
-    
-    public function update_cart_timestamp() {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
-        
-        $user_email = '';
-        $user_id = get_current_user_id();
-        
-        if ($user_id > 0) {
-            $user = get_userdata($user_id);
-            $user_email = $user->user_email;
-        } elseif (WC()->session) {
-            $user_email = WC()->session->get('customer_email');
-        }
-        
-        if (!empty($user_email)) {
-            $wpdb->update(
-                $table_name,
-                array('last_updated' => current_time('mysql')),
-                array('user_email' => $user_email, 'recovered' => 0),
-                array('%s'),
-                array('%s', '%d')
             );
         }
     }
@@ -163,4 +148,3 @@ class WC_Abandoned_Cart_Hook {
 }
 
 new WC_Abandoned_Cart_Hook();
-
