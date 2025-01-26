@@ -144,13 +144,22 @@ class WC_Abandoned_Cart_Hook {
         
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name 
-            WHERE recovered = 0 "
+            WHERE recovered = 0"
         ));
         
         foreach ($abandoned_carts as $cart) {
             do_action('wc_abandoned_cart_detected', $cart);
+            
+            $wpdb->update(
+                $table_name,
+                array('recovered' => 1),
+                array('id' => $cart->id), 
+                array('%d'), 
+                array('%d') 
+            );
         }
     }
+    
 }
 
 new WC_Abandoned_Cart_Hook();
