@@ -3,10 +3,17 @@
 function autonotify_layout() {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
+
+
+    $results = $wpdb->get_results($wpdb->prepare( "SELECT * FROM %i WHERE status = %s;", [ $table, 'pending' ] ));
+
+
+
     $token = $wpdb->get_var($wpdb->prepare(
-        "SELECT token FROM {$table_name} WHERE id = %d", 
-        1
+        "SELECT token FROM %i WHERE id = %d",
+        $table_name
     ));
+    
 
     $status = $wpdb->get_var($wpdb->prepare(
         "SELECT status FROM {$table_name} WHERE id = %d", 
