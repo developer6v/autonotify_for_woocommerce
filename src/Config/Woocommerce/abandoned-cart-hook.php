@@ -117,7 +117,8 @@ class WC_Abandoned_Cart_Hook {
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
         $abandoned_threshold = gmdate('Y-m-d H:i:s', strtotime('-50 minutes', strtotime(current_time('mysql'))));
-        
+        file_put_contents ('abandoned_threshold.log', $abandoned_threshold. PHP_EOL, FILE_APPEND);
+
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name 
             WHERE recovered = 0 AND created_at <= %s",
@@ -125,7 +126,6 @@ class WC_Abandoned_Cart_Hook {
         ));
         
         foreach ($abandoned_carts as $cart) {
-            file_put_contents ('abandoned_threshold.log', $abandoned_threshold. PHP_EOL, FILE_APPEND);
             file_put_contents ('created_at_cart.log', $cart->created_at. PHP_EOL, FILE_APPEND);
 
             do_action('wc_abandoned_cart_detected', $cart);
