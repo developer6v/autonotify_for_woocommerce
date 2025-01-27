@@ -12,16 +12,23 @@ class WC_Abandoned_Cart_Hook {
         add_action('woocommerce_before_checkout_form', array($this, 'track_cart_on_checkout'));
         add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
         
-        if (!wp_next_scheduled('check_abandoned_carts')) {
-            add_filter('cron_schedules', function($schedules) {
-                $schedules['every_minute'] = array(
-                    'interval' => 60, 
-                    'display'  => 'A cada minuto'
-                );
-                return $schedules;
-            });
-            
-            wp_schedule_event(time(), 'every_minute', 'check_abandoned_carts');
+
+        $timestamp = wp_next_scheduled('check_abandoned_carts');
+        if ($timestamp) {
+            wp_unschedule_event($timestamp, 'check_abandoned_carts');
+        }
+
+
+        add_filter('cron_schedules', function($schedules) {
+            $schedules['every_twenty_minutes'] = array(
+                'interval' => 1200, 
+                'display'  => 'A cada 20 minutos'
+            );
+            return $schedules;
+        });
+        
+        if (!wp_next_scheduled('check_abandoned_carts')) {            
+            wp_schedule_event(time(), 'every_twenty_minutes', 'check_abandoned_carts');
         }
         add_action('check_abandoned_carts', array($this, 'process_abandoned_carts'));
     }
@@ -124,9 +131,7 @@ class WC_Abandoned_Cart_Hook {
     public function process_abandoned_carts() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
-        
-        $abandoned_threshold = date('Y-m-d H:i:s', strtotime('-1 minute'));
-        
+                
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name 
             WHERE recovered = 0"
