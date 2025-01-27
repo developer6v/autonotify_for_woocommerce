@@ -3,8 +3,8 @@
 /*
  * Plugin Name:       Autonotify For Woocommerce
  * Plugin URI:        https://github.com/developer6v/autonotify_for_woocommerce
- * Description:       Autonotify For Woocommerce is a plugin that allows Woocommerce to integrate with the platform Autonotify to automate WhatsApp messagesbased on orders statuses.
- * Version:           1.10.3
+ * Description:       Autonotify for WooCommerce is a plugin that seamlessly integrates WooCommerce with the Autonotify platform, enabling automated WhatsApp message notifications based on order statuses and abandoned cart.
+ * Version:           1.0
  * Requires at least: 6.2
  * Requires PHP:      7.2
  * Author:            Sourei
