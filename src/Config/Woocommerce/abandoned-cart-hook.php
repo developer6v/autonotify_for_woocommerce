@@ -95,9 +95,10 @@ class WC_Abandoned_Cart_Hook {
                     'user_id' => $user_id,
                     'user_email' => $user_email,
                     'cart_contents' => json_encode($cart_contents),
-                    'cart_total' => $cart_total
+                    'cart_total' => $cart_total,
+                    'recovered' => 0
                 ),
-                array('%d', '%s', '%s', '%f')
+                array('%d', '%s', '%s', '%f', '%d')
             );
         }
     }
