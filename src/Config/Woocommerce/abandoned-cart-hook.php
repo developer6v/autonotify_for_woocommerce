@@ -138,4 +138,5 @@ class WC_Abandoned_Cart_Hook {
 }
 
 add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'register_cron_schedule'));
+new WC_Abandoned_Cart_Hook();
 
