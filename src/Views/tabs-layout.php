@@ -4,9 +4,10 @@ function autonotify_layout() {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
     
-    $sqlToken = $wpdb->prepare("SELECT token FROM $table_name WHERE id = %d", 1);
+    $sqlToken = $wpdb->prepare("SELECT token FROM {$table_name} WHERE id = %d", 1);
     $token = $wpdb->get_var($sqlToken);
-    $sqlStatus = $wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", 1);
+    
+    $sqlStatus = $wpdb->prepare("SELECT status FROM {$table_name} WHERE id = %d", 1);
     $status = $wpdb->get_var($sqlStatus);
 
     $escaped_token = esc_attr($token);
