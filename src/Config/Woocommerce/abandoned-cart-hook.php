@@ -125,7 +125,7 @@ class WC_Abandoned_Cart_Hook {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
-        $abandoned_threshold = date('Y-m-d H:i:s', strtotime('-20 minutes'));
+        $abandoned_threshold = date('Y-m-d H:i:s', strtotime('-5 minutes'));
         
         $abandoned_carts = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name 
