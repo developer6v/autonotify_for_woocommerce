@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../Services/Database/save_token_database.php';
 require_once __DIR__ . '/../Services/Api/validate_token.php';
+require_once __DIR__ . '/../../../../../wp-load.php';
 
 $token = isset($_POST['token']) ? sanitize_text_field($_POST['token']) : null;
 
