@@ -3,11 +3,8 @@
 function autonotify_layout() {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
-    
     $token = $wpdb->get_var($wpdb->prepare("SELECT token FROM %i WHERE id = %d", $table_name, 1));
-
-    $sqlStatus = $wpdb->prepare("SELECT status FROM %i WHERE id = %d", $table_name, 1);
-    $status = $wpdb->get_var($sqlStatus);
+    $status = $wpdb->get_var($wpdb->prepare("SELECT status FROM %i WHERE id = %d", $table_name, 1));
 
     echo "<div class='autonotify-header'>
         <img src='" . esc_url(plugins_url('/public/img/autonotify.svg', __FILE__)) . "' alt='' class=''/>
