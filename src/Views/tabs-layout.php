@@ -1,21 +1,22 @@
 <?php
 
-function autonotify_layout () {
+function autonotify_layout() {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
+    
     $sqlToken = $wpdb->prepare("SELECT token FROM $table_name WHERE id = %d", 1);
     $token = $wpdb->get_var($sqlToken);
     $sqlStatus = $wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", 1);
     $status = $wpdb->get_var($sqlStatus);
 
+    $escaped_token = esc_attr($token);
+    $escaped_status = esc_attr($status);
 
     echo "<div class='autonotify-header'>
-        <img src='../wp-content/plugins/autonotify-for-woocommerce/public/img/autonotify.svg' alt='' class=''/>
+        <img src='" . esc_url(plugins_url('/public/img/autonotify.svg', __FILE__)) . "' alt='' class=''/>
     </div>
 
-
-
-    <div class='autonotify-body' data-status='$status'>
+    <div class='autonotify-body' data-status='" . $escaped_status . "'>
 
         <div class='div_autonotify_title'>
             <span class='autonotify_title'>Configurações</span>
@@ -25,7 +26,7 @@ function autonotify_layout () {
         <div class='autonotify_body_active'>
             <span class='autonotify_token_label'><i class='fa-solid fa-key'></i> Token</span>
             <div class='autonotify_input_div'>
-                <input readonly value = '" . $token  ."' class = 'autonotify_token' placeholder='Informe seu token de integração Autonotify.' type = 'text'/>
+                <input readonly value='" . $escaped_token . "' class='autonotify_token' placeholder='Informe seu token de integração Autonotify.' type='text'/>
                 <i class='fa-solid fa-circle-check tokencheckedicon'></i>
             </div>
             <button class='autonotify_edit_token'><i class='fa-solid fa-pen-to-square'></i> Redefinir Token</button>        
@@ -34,15 +35,14 @@ function autonotify_layout () {
         <div class='autonotify_body_inactive'>
             <span class='autonotify_token_label'><i class='fa-solid fa-key'></i> Token</span>
             <div class='autonotify_input_div'>
-                <input value = '" . $token  ."' class = 'autonotify_token' placeholder='Informe seu token de integração Autonotify.' type = 'text'/>
+                <input value='" . $escaped_token . "' class='autonotify_token' placeholder='Informe seu token de integração Autonotify.' type='text'/>
             </div>    
             <button id='autonotify_validate_token' class='autonotify_validate_token'><i class='fa-solid fa-check-to-slot'></i> Validar Token</button>    
-            <img class='autonotify_loading' src='../wp-content/plugins/autonotify-for-woocommerce/public/gif/loading.gif' alt='' class=''/>
+            <img class='autonotify_loading' src='" . esc_url(plugins_url('/public/gif/loading.gif', __FILE__)) . "' alt='' class=''/>
         </div>
 
     </div>
 
-    
     <div class='autonotify_warning_div'>
         <div class='autonotify_token_saved'>
             <span><i class='fa-solid fa-check'></i> Token Validado!</span>
@@ -50,7 +50,7 @@ function autonotify_layout () {
         <div class='autonotify_token_failed'>
             <span><i class='fa-solid fa-circle-exclamation'></i> Token Inválido!</span>
         </div>
-    </div>
-    ";
+    </div>";
 }
+
 ?>
