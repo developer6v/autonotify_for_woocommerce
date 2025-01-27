@@ -29,10 +29,10 @@ class WC_Abandoned_Cart_Hook {
     
     public function create_abandoned_cart_table() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         $charset_collate = $wpdb->get_charset_collate();
         
-        if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+        if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) != $table_name) {
             $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                 id bigint(20) NOT NULL AUTO_INCREMENT,
                 user_id bigint(20),
@@ -52,7 +52,7 @@ class WC_Abandoned_Cart_Hook {
     
     public function track_cart_on_checkout() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
         $user_id = get_current_user_id();
         $user_email = $user_id > 0 ? get_userdata($user_id)->user_email : WC()->session->get('customer_email');
@@ -73,7 +73,7 @@ class WC_Abandoned_Cart_Hook {
             $wpdb->update(
                 $table_name,
                 array(
-                    'cart_contents' => json_encode($cart_contents),
+                    'cart_contents' => wp_json_encode($cart_contents),
                     'cart_total' => $cart_total,
                 ),
                 array('id' => $existing_cart),
@@ -86,7 +86,7 @@ class WC_Abandoned_Cart_Hook {
                 array(
                     'user_id' => $user_id,
                     'user_email' => $user_email,
-                    'cart_contents' => json_encode($cart_contents),
+                    'cart_contents' => wp_json_encode($cart_contents),
                     'cart_total' => $cart_total,
                     'recovered' => 0
                 ),
@@ -97,7 +97,7 @@ class WC_Abandoned_Cart_Hook {
     
     public function remove_completed_cart($order_id) {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
         $order = wc_get_order($order_id);
         if ($order) {
@@ -114,18 +114,18 @@ class WC_Abandoned_Cart_Hook {
     
     public function process_abandoned_carts() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
         $abandoned_threshold = gmdate('Y-m-d H:i:s', strtotime('-20 minutes', strtotime(current_time('mysql'))));
 
-        $abandoned_carts = $wpdb->get_results($wpdb->prepare(
-            "SELECT * FROM $table_name 
-            WHERE recovered = 0 AND created_at <= %s",
-            $abandoned_threshold
-        ));
+        $abandoned_carts = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$table_name} WHERE recovered = 0 AND created_at <= %s",
+                $abandoned_threshold
+            )
+        );
         
         foreach ($abandoned_carts as $cart) {
-
             do_action('wc_abandoned_cart_detected', $cart);
             $wpdb->update(
                 $table_name,
@@ -140,4 +140,3 @@ class WC_Abandoned_Cart_Hook {
 
 add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'register_cron_schedule'));
 new WC_Abandoned_Cart_Hook();
-

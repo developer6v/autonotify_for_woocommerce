@@ -61,8 +61,8 @@ function getAbandonedCartData($cart) {
     $cartUrl = $base_url . '?' . ltrim($url_params, '&');
 
     $createdAt = $cart->created_at ?? null;
-    $date = $createdAt ? date('Y-m-d', strtotime($createdAt)) : '';
-    $hour = $createdAt ? date('H:i:s', strtotime($createdAt)) : '';
+    $date = $createdAt ? gmdate('Y-m-d', strtotime($createdAt)) : '';
+    $hour = $createdAt ? gmdate('H:i:s', strtotime($createdAt)) : '';
 
     $data = [
         "address" => $address,

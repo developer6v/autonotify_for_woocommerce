@@ -26,8 +26,8 @@ function getResetPasswordData($user_login, $key) {
 
     $data = [
         "passwordreseturl" => $reset_url,
-        "date" => date("d/m/Y"),
-        "hour" => date("H:i:s"),
+        "date" => gmdate("d/m/Y"),
+        "hour" => gmdate("H:i:s"),
         "address" => $address,                                  
         "customername" => $customer_name,                        
         "customeremail" => $customer_email,                     
