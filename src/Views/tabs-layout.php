@@ -5,14 +5,11 @@ function autonotify_layout() {
     $table_name = $wpdb->prefix . "autonotify_config";
 
 
-    $results = $wpdb->get_results($wpdb->prepare( "SELECT * FROM %i WHERE status = %s;", [ $table, 'pending' ] ));
+    //$results = $wpdb->get_results($wpdb->prepare( "SELECT * FROM %i WHERE status = %s;", [ $table, 'pending' ] ));
 
 
 
-    $token = $wpdb->get_var($wpdb->prepare(
-        "SELECT token FROM %i WHERE id = %d",
-        $table_name
-    ));
+    $token = $wpdb->get_var($wpdb->prepare("SELECT token FROM %i WHERE id = %d", [$table_name, 1]));
     
 
     $status = $wpdb->get_var($wpdb->prepare(
