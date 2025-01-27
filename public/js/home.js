@@ -26,11 +26,9 @@ jQuery(document).ready(function($){
                     $('.autonotify_token_saved').fadeIn();
                     window.location.reload();
                 }
-                console.log (response);
             },
             error: function (response) {
                 $('.autonotify_token_failed').fadeIn();
-                console.log (response);
             }
         }).always (function() {
             setTimeout (function () {

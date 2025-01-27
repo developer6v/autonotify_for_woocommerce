@@ -125,9 +125,6 @@ class WC_Abandoned_Cart_Hook {
         ));
         
         foreach ($abandoned_carts as $cart) {
-            file_put_contents ('created_at_cart.log', $cart->created_at. PHP_EOL, FILE_APPEND);
-            file_put_contents ('abandoned_threshold.log', $abandoned_threshold. PHP_EOL, FILE_APPEND);
-
 
             do_action('wc_abandoned_cart_detected', $cart);
             $wpdb->update(

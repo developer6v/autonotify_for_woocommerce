@@ -16,8 +16,7 @@ function validate_token ($token) {
 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
-        error_log("Request failed: $error_message");
-    } else {
+=    } else {
         $response_body = wp_remote_retrieve_body($response);
         return $response_body;
     }
