@@ -3,7 +3,7 @@
 
 function autonotify_table_manager() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'autonotify_config';
+    $table_name = $wpdb->prefix . 'sr_autonotify_config';
     $charset_collate = $wpdb->get_charset_collate();
 
     if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {

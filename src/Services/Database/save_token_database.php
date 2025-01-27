@@ -5,7 +5,7 @@ function save_token_database($token, $status) {
         require_once __DIR__ . '/../../../../../../wp-load.php';
 
         global $wpdb;
-        $table_name = esc_sql($wpdb->prefix . 'autonotify_config'); 
+        $table_name = $wpdb->prefix . 'sr_autonotify_config'; 
 
         $result = $wpdb->query($wpdb->prepare("UPDATE %i SET token = %s, status = %s WHERE id = %d", [$table_name, $token, $status, 1]));
 

@@ -2,7 +2,7 @@
 
 function sendAutonotify($hook, $data) {
     global $wpdb;
-    $table_name = $wpdb->prefix . "autonotify_config";
+    $table_name = $wpdb->prefix . "sr_autonotify_config";
 
     $api_key = API_URL;
     $token = $wpdb->get_var($wpdb->prepare("SELECT token FROM %i WHERE id = %d", [$table_name, 1]));
