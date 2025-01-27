@@ -4,10 +4,10 @@ function autonotify_layout() {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
     
-    $sqlToken = $wpdb->prepare("SELECT token FROM %s WHERE id = %d", $table_name, 1);
+    $sqlToken = $wpdb->prepare("SELECT token FROM %i WHERE id = %d", $table_name, 1);
     $token = $wpdb->get_var($sqlToken);
 
-    $sqlStatus = $wpdb->prepare("SELECT status FROM %s WHERE id = %d", $table_name, 1);
+    $sqlStatus = $wpdb->prepare("SELECT status FROM %i WHERE id = %d", $table_name, 1);
     $status = $wpdb->get_var($sqlStatus);
 
     echo "<div class='autonotify-header'>
