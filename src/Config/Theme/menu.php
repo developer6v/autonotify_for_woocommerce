@@ -3,8 +3,8 @@
 // Configuração Menu
 function autonotify_menu_manager() {
     add_menu_page(
-        __( 'AutoNotify', 'woocommerce' ),
-        __( 'AutoNotify', 'woocommerce' ),
+        __( 'AutoNotify', 'autonotify-for-woocommerce' ),
+        __( 'AutoNotify', 'autonotify-for-woocommerce' ),
         'manage_options',                          
         'whatsapp-settings',                         
         'autonotify_layout',     
