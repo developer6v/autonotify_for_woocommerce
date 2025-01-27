@@ -6,15 +6,8 @@ function save_token_database($token, $status) {
 
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'autonotify_config'); 
-        
-        $sql = $wpdb->prepare(
-            "UPDATE {$table_name} SET token = %s, status = %s WHERE id = %d",
-            $token,
-            $status,
-            1
-        );
-        
-        $result = $wpdb->query($sql);
+
+        $result = $wpdb->query($wpdb->prepare("UPDATE %i SET token = %s, status = %s WHERE id = %d", [$table_name, $token, $status, 1]));
 
         if ($result === false) {
             return 'Deu erro na atualização.';

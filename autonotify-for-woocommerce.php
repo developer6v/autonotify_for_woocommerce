@@ -11,8 +11,7 @@
  * Author URI:        https://sourei.com.br/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       my-basics-plugin
- * Domain Path:       /languages
+ * Text Domain:       autonotify-for-woocommerce
  */
 
  require_once 'src/Config/index.php';
