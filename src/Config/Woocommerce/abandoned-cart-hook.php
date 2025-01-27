@@ -9,15 +9,30 @@ class WC_Abandoned_Cart_Hook {
     public function __construct() {
         $this->create_abandoned_cart_table();
         
-        wp_clear_scheduled_hook('check_abandoned_carts');
+        add_action('woocommerce_before_checkout_form', array($this, 'track_cart_on_checkout'));
+        add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
+        
+        if (!wp_next_scheduled('check_abandoned_carts')) {
+            wp_schedule_event(time(), 'every_20_minutes', 'check_abandoned_carts');
+        }
+        
+        add_action('check_abandoned_carts', array($this, 'process_abandoned_carts'));
+    }
+    
+    public static function register_cron_schedule($schedules) {
+        $schedules['every_20_minutes'] = array(
+            'interval' => 20 * 60, 
+            'display'  => 'A cada 20 minutos'
+        );
+        return $schedules;
     }
     
     public function create_abandoned_cart_table() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         $charset_collate = $wpdb->get_charset_collate();
+        
         if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
-
             $sql = "CREATE TABLE IF NOT EXISTS $table_name (
                 id bigint(20) NOT NULL AUTO_INCREMENT,
                 user_id bigint(20),
@@ -40,16 +55,7 @@ class WC_Abandoned_Cart_Hook {
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
         $user_id = get_current_user_id();
-        $user_email = '';
-        
-        if ($user_id > 0) {
-            $user = get_userdata($user_id);
-            $user_email = $user->user_email;
-        } else {
-            if (WC()->session) {
-                $user_email = WC()->session->get('customer_email');
-            }
-        }
+        $user_email = $user_id > 0 ? get_userdata($user_id)->user_email : WC()->session->get('customer_email');
         
         if (empty($user_email)) {
             return;
@@ -94,16 +100,14 @@ class WC_Abandoned_Cart_Hook {
         $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         
         $order = wc_get_order($order_id);
-        $user_id = $order->get_user_id();
         if ($order) {
             $user_email = $order->get_billing_email();
-            
             $wpdb->update(
                 $table_name,
                 array('recovered' => 1),
-                array('user_id' => $user_id, 'recovered' => 0),
+                array('user_email' => $user_email, 'recovered' => 0),
                 array('%d'),
-                array('%d', '%d')
+                array('%s', '%d')
             );
         }
     }
@@ -122,7 +126,6 @@ class WC_Abandoned_Cart_Hook {
         
         foreach ($abandoned_carts as $cart) {
             do_action('wc_abandoned_cart_detected', $cart);
-            
             $wpdb->update(
                 $table_name,
                 array('recovered' => 1),
@@ -134,4 +137,5 @@ class WC_Abandoned_Cart_Hook {
     }
 }
 
-new WC_Abandoned_Cart_Hook();
+add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'register_cron_schedule'));
+
