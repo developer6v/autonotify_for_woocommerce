@@ -3,10 +3,10 @@
 function sendAutonotify($hook, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "autonotify_config";
-    $sqlToken = $wpdb->prepare("SELECT token FROM $table_name WHERE id = %d", 1);
 
     $api_key = API_URL;
-    $token = $wpdb->get_var($sqlToken);
+    $token = $wpdb->get_var($wpdb->prepare("SELECT token FROM %i WHERE id = %d", [$table_name, 1]));
+
 
     $headers = [
         "Content-Type" => "application/json",
@@ -20,7 +20,7 @@ function sendAutonotify($hook, $data) {
 
     $response = wp_remote_post("$api_key/hooks/woocommerce", [
         'method'    => 'POST',
-        'body'      => json_encode($postfiels), 
+        'body'      => wp_json_encode($postfiels), 
         'headers'   => $headers,            
         'timeout'   => 15,                   
     ]);
