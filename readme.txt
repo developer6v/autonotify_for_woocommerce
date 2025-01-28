@@ -1,8 +1,8 @@
 === Autonotify For Woocommerce ===
-Contributors: 
-Tags: autonotify, automate, woocommerce, wordpress, messages, abandoned cart
+Contributors: techsourei
+Tags: autonotify, automate, woocommerce, messages, abandoned cart
 Requires at least: 6.2
-Tested up to: 6.2
+Tested up to: 6.7
 Stable tag: 1.0
 Requires PHP: 7.2
 License: GPLv2 or later
