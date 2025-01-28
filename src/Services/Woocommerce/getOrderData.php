@@ -54,7 +54,7 @@ function getOrderData($orderId) {
         "customerid" => $customer_id,                    
         "ordertotal" => number_format($order->get_total(), 2, ',', ''),
         "status" => $order->get_status(),                    
-        "createdaat" => $order->get_date_created()->gmdate('Y-m-d H:i:s'), 
+        "createdaat" => $order->get_date_created()->date('Y-m-d H:i:s'),
         "items" => $items_string, 
         "date" => gmdate("d/m/Y"),
         "hour" => gmdate("H:i:s")
