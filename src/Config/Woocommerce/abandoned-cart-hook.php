@@ -38,7 +38,7 @@ class WC_Abandoned_Cart_Hook {
                 user_id BIGINT(20) NULL,
                 user_email VARCHAR(100) NULL,
                 phone VARCHAR(100) NULL,
-                is_guest TINYINT(1) NOT NULL DEFAULT 1,
+                is_guest BOOLEAN NULL,
                 form_data TEXT NULL,
                 cart_contents LONGTEXT NULL,
                 cart_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
