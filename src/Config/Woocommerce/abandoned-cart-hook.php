@@ -90,15 +90,16 @@ class WC_Abandoned_Cart_Hook {
                 $table_name,
                 array(
                     'user_id' => $user_id,
-                    'is_guest' => false,
+                    'is_guest' => false, 
                     'user_email' => $user_email,
                     'cart_contents' => wp_json_encode($cart_contents),
                     'cart_total' => $cart_total,
                     'recovered' => 0
                 ),
-                array('%d', '%s', '%s', '%f', '%d')
+                array('%d', '%d', '%s', '%s', '%f', '%d')  
             );
         }
+        
     }
 
 
@@ -132,6 +133,7 @@ class WC_Abandoned_Cart_Hook {
                 array('%s', '%f'),
                 array('%d')
             );
+            
         } else {
             $wpdb->insert(
                 $table_name,
@@ -145,8 +147,18 @@ class WC_Abandoned_Cart_Hook {
                     'cart_total' => $cart_total,
                     'recovered' => 0
                 ),
-                array('%d', '%s', '%s', '%f', '%d')
+                array(
+                    '%d', 
+                    '%d', 
+                    '%s', 
+                    '%s', 
+                    '%s', 
+                    '%s', 
+                    '%f',
+                    '%d' 
+                )
             );
+            
         }
     }
     

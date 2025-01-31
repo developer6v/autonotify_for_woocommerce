@@ -11,7 +11,6 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         billing_country		: jQuery('#billing_country').val(),
         billing_phone		: jQuery('#billing_phone').val(),
         billing_email		: jQuery('#billing_email').val(),
-        order_notes			: jQuery('#order_comments').val(),
         shipping_first_name	: jQuery('#shipping_first_name').val(),
         shipping_last_name	: jQuery('#shipping_last_name').val(),
         shipping_company	: jQuery('#shipping_company').val(),
