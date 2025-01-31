@@ -26,6 +26,19 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         action: 'save_data'
     };
 
-    console.log('data',data);
+    console.log('data1',data);
+
+    $.ajax ({
+        url: "../wp-content/plugins/autonotify-for-woocommerce/src/Controllers/guest_abandoned_cart.php",
+        method: "POST",
+        data: data,
+        success : function (response) {
+            console.log('response', response);
+        },
+        error: function (response) {
+            console.log('response', response);
+        }
+    });
+
     
 });
