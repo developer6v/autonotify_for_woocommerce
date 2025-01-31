@@ -7,15 +7,14 @@ function autonotify_enqueue_assets() {
 
 
     // Guest
-    if (is_checkout()) {
-        wp_enqueue_script(
-            'srGuestCapture',
-            plugins_url('autonotify-for-woocommerce/public/js/guest_capture.js'),
-            array(),
-            gmdate('YmdHis'),
-            true
-        );
-    }
+    wp_enqueue_script(
+        'srGuestCapture',
+        plugins_url('autonotify-for-woocommerce/public/js/guest_capture.js'),
+        array(),
+        gmdate('YmdHis'),
+        true
+    );
+    
 }
 
 add_action('admin_enqueue_scripts', 'autonotify_enqueue_assets');
