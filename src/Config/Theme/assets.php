@@ -12,7 +12,7 @@ add_action('admin_enqueue_scripts', 'autonotify_enqueue_assets');
 
 // USUARIO
 add_action('wp_enqueue_scripts', function() {
-    //if (is_checkout()) {
+    if (is_checkout()) {
         wp_enqueue_script(
             'srGuestCapture',
             plugins_url('autonotify-for-woocommerce/public/js/guest_capture.js'),
@@ -20,7 +20,7 @@ add_action('wp_enqueue_scripts', function() {
             gmdate('YmdHis'),
             true
         );
-    //}
+    }
 });
 
 ?>
