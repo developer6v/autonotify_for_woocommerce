@@ -29,26 +29,31 @@ class WC_Abandoned_Cart_Hook {
     
     public function create_abandoned_cart_table() {
         global $wpdb;
-        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
+        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
         $charset_collate = $wpdb->get_charset_collate();
-        
-        if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) != $table_name) {
-            $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-                id bigint(20) NOT NULL AUTO_INCREMENT,
-                user_id bigint(20),
-                user_email varchar(100),
-                cart_contents longtext,
-                cart_total decimal(10,2),
-                created_at datetime DEFAULT CURRENT_TIMESTAMP,
-                last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                recovered boolean DEFAULT 0,
-                PRIMARY KEY  (id)
+
+        if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
+            $sql = "CREATE TABLE $table_name (
+                id BIGINT(20) NOT NULL AUTO_INCREMENT,
+                user_id BIGINT(20) NULL,
+                user_email VARCHAR(100) NULL,
+                phone VARCHAR(100) NULL,
+                is_guest TINYINT(1) NOT NULL DEFAULT 1,
+                form_data TEXT NULL,
+                cart_contents LONGTEXT NULL,
+                cart_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                recovered TINYINT(1) NOT NULL DEFAULT 0,
+                PRIMARY KEY (id)
             ) $charset_collate;";
-            
+    
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
         }
     }
+    
+    
     
     public function track_cart_on_checkout() {
         global $wpdb;
@@ -85,6 +90,7 @@ class WC_Abandoned_Cart_Hook {
                 $table_name,
                 array(
                     'user_id' => $user_id,
+                    'is_guest' => false,
                     'user_email' => $user_email,
                     'cart_contents' => wp_json_encode($cart_contents),
                     'cart_total' => $cart_total,
@@ -94,6 +100,56 @@ class WC_Abandoned_Cart_Hook {
             );
         }
     }
+
+
+    public function track_cart_on_checkout_guest($data) {
+        global $wpdb;
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
+        
+        $user_email = $data['billing_email'];
+        $phone = $data['billing_phone'];
+        
+        if (empty($phone) || empty($user_email)) {
+            return;
+        }
+        
+        $cart_contents = WC()->cart->get_cart_contents();
+        $cart_total = WC()->cart->get_cart_contents_total();
+        
+        $existing_cart = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
+            $user_email
+        ));
+        
+        if ($existing_cart) {
+            $wpdb->update(
+                $table_name,
+                array(
+                    'cart_contents' => wp_json_encode($cart_contents),
+                    'cart_total' => $cart_total,
+                ),
+                array('id' => $existing_cart),
+                array('%s', '%f'),
+                array('%d')
+            );
+        } else {
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'user_id' => -1,
+                    'is_guest' => true,
+                    'user_email' => $user_email,
+                    'phone' => $phone,
+                    'form_data' => wp_json_encode($data),
+                    'cart_contents' => wp_json_encode($cart_contents),
+                    'cart_total' => $cart_total,
+                    'recovered' => 0
+                ),
+                array('%d', '%s', '%s', '%f', '%d')
+            );
+        }
+    }
+    
     
     public function remove_completed_cart($order_id) {
         global $wpdb;
@@ -126,7 +182,11 @@ class WC_Abandoned_Cart_Hook {
         );
         
         foreach ($abandoned_carts as $cart) {
-            do_action('wc_abandoned_cart_detected', $cart);
+            if ($cart->is_guest) {
+                do_action('wc_abandoned_cart_guest_detected', $cart);
+            } else {
+                do_action('wc_abandoned_cart_detected', $cart);
+            }
             $wpdb->update(
                 $table_name,
                 array('recovered' => 1),

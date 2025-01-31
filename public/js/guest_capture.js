@@ -22,8 +22,6 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         shipping_postcode	: jQuery('#shipping_postcode').val(),
         shipping_country	: jQuery('#shipping_country').val(),
         ship_to_billing		: jQuery('#shiptobilling-checkbox').val(),
-        wcal_guest_capture_nonce: jQuery( '#wcal_guest_capture_nonce' ).val(),
-        action: 'save_data'
     };
 
     console.log('data1',data);

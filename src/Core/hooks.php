@@ -34,4 +34,14 @@ function handle_abandoned_cart($cart) {
 }
 
 
+// Guest - Carrinho Abandonado
+add_action('wc_abandoned_cart_guest_detected', 'handle_abandoned_guest_cart', 10, 1);
+function handle_abandoned_guest_cart ($cart) {
+    $data = getAbandonedCartDataGuest ($cart);
+    sendAutonotify(['abandoned_cart'], $data);
+
+    file_put_contents ('datacart1.txt', json_encode($data));
+}
+
+
 ?>
