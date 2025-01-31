@@ -26,7 +26,7 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         action: 'save_data'
     };
 
-    console.log('data',json_encode(data));
-    alert(json_encode(data));
+    console.log('data',JSON.stringify(data));
+    alert(JSON.stringify(data));
     
 });
