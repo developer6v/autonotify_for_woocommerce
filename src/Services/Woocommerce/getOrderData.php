@@ -61,7 +61,7 @@ function getOrderData($orderId) {
     ];
 
 
-
+    file_put_contents('datateste.txt', json_encode($data));
     return $data; 
 }
 
