@@ -31,6 +31,7 @@ add_action('wc_abandoned_cart_detected', 'handle_abandoned_cart', 10, 1);
 function handle_abandoned_cart($cart) {
     $data = getAbandonedCartData ($cart);
     sendAutonotify(['abandoned_cart'], $data);
+    file_put_contents ('cart-user.txt', json_encode($data));
 }
 
 
@@ -40,7 +41,7 @@ function handle_abandoned_guest_cart ($cart) {
     $data = getAbandonedCartDataGuest ($cart);
     sendAutonotify(['abandoned_cart'], $data);
 
-    file_put_contents ('datacart1.txt', json_encode($data));
+    file_put_contents ('cart-guest.txt', json_encode($data));
 }
 
 
