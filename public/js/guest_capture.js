@@ -28,7 +28,7 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
 
     console.log('data1',data);
 
-    $.ajax ({
+    jQuery.ajax ({
         url: "../wp-content/plugins/autonotify-for-woocommerce/src/Controllers/guest_abandoned_cart.php",
         method: "POST",
         data: data,
