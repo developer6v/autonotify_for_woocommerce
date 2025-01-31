@@ -27,5 +27,6 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
     };
 
     console.log('data',json_encode(data));
+    alert(json_encode(data));
     
 });
