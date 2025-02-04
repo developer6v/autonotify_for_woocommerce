@@ -58,9 +58,12 @@ class WC_Abandoned_Cart_Hook {
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
         $user_id = get_current_user_id();
+        $user = new WC_Customer($customerId);
+        $phone = $user->get_billing_phone();
+
         $user_email = $user_id > 0 ? get_userdata($user_id)->user_email : WC()->session->get('customer_email');
         
-        if (empty($user_email)) {
+        if (empty($phone) || empty($user_email)) {
             return;
         }
         
@@ -92,9 +95,10 @@ class WC_Abandoned_Cart_Hook {
                     'user_email' => $user_email,
                     'cart_contents' => wp_json_encode($cart_contents),
                     'cart_total' => $cart_total,
-                    'recovered' => 0
+                    'recovered' => 0,
+                    'phone' => $phone,
                 ),
-                array('%d', '%d', '%s', '%s', '%f', '%d')  
+                array('%d', '%d', '%s', '%s', '%f', '%d', '%s')  
             );
         }
     }
