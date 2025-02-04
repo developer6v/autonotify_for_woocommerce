@@ -1,6 +1,6 @@
 <?php
 
-function save_token_database($token, $status) {
+function autonotify_save_token_database($token, $status) {
     try {
         require_once __DIR__ . '/../../../../../../wp-load.php';
 

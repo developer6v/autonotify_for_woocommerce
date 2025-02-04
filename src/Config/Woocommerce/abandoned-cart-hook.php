@@ -7,19 +7,19 @@ if (!defined('ABSPATH')) {
 class WC_Abandoned_Cart_Hook {
     
     public function __construct() {
-        $this->create_abandoned_cart_table();
+        $this->autonotify_create_abandoned_cart_table();
         
-        add_action('woocommerce_before_checkout_form', array($this, 'track_cart_on_checkout'));
-        add_action('woocommerce_checkout_order_created', array($this, 'remove_completed_cart'));
+        add_action('woocommerce_before_checkout_form', array($this, 'autonotify_track_cart_on_checkout'));
+        add_action('woocommerce_checkout_order_created', array($this, 'autonotify_remove_completed_cart'));
         
         if (!wp_next_scheduled('check_abandoned_carts')) {
             wp_schedule_event(time(), 'every_20_minutes', 'check_abandoned_carts');
         }
         
-        add_action('check_abandoned_carts', array($this, 'process_abandoned_carts'));
+        add_action('check_abandoned_carts', array($this, 'autonotify_process_abandoned_carts'));
     }
     
-    public static function register_cron_schedule($schedules) {
+    public static function autonotify_register_cron_schedule($schedules) {
         $schedules['every_20_minutes'] = array(
             'interval' => 20 * 60, 
             'display'  => 'A cada 20 minutos'
@@ -27,11 +27,11 @@ class WC_Abandoned_Cart_Hook {
         return $schedules;
     }
     
-    public function create_abandoned_cart_table() {
+    public function autonotify_create_abandoned_cart_table() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sr_wc_abandoned_carts';
+        $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         $charset_collate = $wpdb->get_charset_collate();
-
+        
         if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
             $sql = "CREATE TABLE $table_name (
                 id BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -53,9 +53,7 @@ class WC_Abandoned_Cart_Hook {
         }
     }
     
-    
-    
-    public function track_cart_on_checkout() {
+    public function autonotify_track_cart_on_checkout() {
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
@@ -99,11 +97,14 @@ class WC_Abandoned_Cart_Hook {
                 array('%d', '%d', '%s', '%s', '%f', '%d')  
             );
         }
-        
     }
+    
 
-
-    public function track_cart_on_checkout_guest($data) {
+    
+    public function autonotify_track_cart_on_checkout_guest($data) {
+        if (is_user_logged_in()) {
+            return;
+        }
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
@@ -121,7 +122,7 @@ class WC_Abandoned_Cart_Hook {
             "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
             $user_email
         ));
-        
+          
         if ($existing_cart) {
             $wpdb->update(
                 $table_name,
@@ -161,9 +162,9 @@ class WC_Abandoned_Cart_Hook {
             
         }
     }
-    
-    
-    public function remove_completed_cart($order_id) {
+
+
+    public function autonotify_remove_completed_cart($order_id) {
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
@@ -180,7 +181,7 @@ class WC_Abandoned_Cart_Hook {
         }
     }
     
-    public function process_abandoned_carts() {
+    public function autonotify_process_abandoned_carts() {
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
@@ -192,7 +193,7 @@ class WC_Abandoned_Cart_Hook {
                 $abandoned_threshold
             )
         );
-        
+
         foreach ($abandoned_carts as $cart) {
             if ($cart->is_guest) {
                 do_action('wc_abandoned_cart_guest_detected', $cart);
@@ -210,5 +211,6 @@ class WC_Abandoned_Cart_Hook {
     }
 }
 
-add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'register_cron_schedule'));
+
+add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'autonotify_register_cron_schedule'));
 new WC_Abandoned_Cart_Hook();

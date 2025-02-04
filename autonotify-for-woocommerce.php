@@ -12,9 +12,12 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       autonotify-for-woocommerce
+ * Requires Plugins:  woocommerce
  */
-
+if ( ! defined( 'ABSPATH' ) ) exit; 
  require_once 'src/Config/index.php';
+ define( 'AUTONOTIFY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+ define( 'AUTONOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 
 ?>

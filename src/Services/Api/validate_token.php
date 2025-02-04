@@ -1,6 +1,6 @@
 <?php
 
-function validate_token ($token) {
+function autonotify_validate_token ($token) {
     require_once __DIR__ . '/../../../../../../wp-load.php';
     $api_key = API_URL;
     $headers = [

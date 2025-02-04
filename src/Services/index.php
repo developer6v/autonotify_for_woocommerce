@@ -1,5 +1,6 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; 
 
 require_once 'Api/validate_token.php';
 require_once 'Api/send_autonotify.php';

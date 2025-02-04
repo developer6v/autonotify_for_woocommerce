@@ -8,3 +8,7 @@ Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Autonotify for WooCommerce is a plugin that seamlessly integrates WooCommerce with the Autonotify platform, enabling automated WhatsApp message notifications based on order statuses and abandoned cart.
+
+== External services ==
+
+This plugin connects to the Autonotify API to send information. It is needed for security reasons, such as the authentication token, and to automate the workflow of sending messages based on order status and abandoned carts.

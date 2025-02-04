@@ -1,6 +1,6 @@
 <?php
 
-function getResetPasswordData($user_login, $key) {
+function autonotify_getResetPasswordData($user_login, $key) {
     $user = get_user_by( 'login', $user_login );
     $customer_phone = get_user_meta($user->ID, 'billing_phone', true);
     if (empty($customer_phone)) {

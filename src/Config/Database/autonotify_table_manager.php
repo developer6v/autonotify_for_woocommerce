@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; 
 
 function autonotify_table_manager() {
     global $wpdb;

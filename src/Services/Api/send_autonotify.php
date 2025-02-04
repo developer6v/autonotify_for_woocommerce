@@ -1,6 +1,6 @@
 <?php
 
-function sendAutonotify($hook, $data) {
+function autonotify_sendData($hook, $data) {
     global $wpdb;
     $table_name = $wpdb->prefix . "sr_autonotify_config";
 

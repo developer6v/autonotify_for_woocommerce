@@ -22,14 +22,13 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         shipping_country	: jQuery('#shipping_country').val(),
         ship_to_billing		: jQuery('#shiptobilling-checkbox').val(),
     };
-
-    console.log('data1',data);
-
+    console.log(JSON.stringify(data));
     jQuery.ajax ({
-        url: "../wp-content/plugins/autonotify-for-woocommerce/src/Controllers/guest_abandoned_cart.php",
+        url: autonotify_ajax_abandoned_cart_guest.ajax_url,
         method: "POST",
         contentType: "application/json", 
         data: JSON.stringify(data),
+        
         success : function (response) {
             console.log('response', response);
         },

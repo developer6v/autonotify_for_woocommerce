@@ -1,6 +1,6 @@
 <?php
 
-function getOrderData($orderId) {
+function autonotify_getOrderData($orderId) {
     $order = new WC_Order($orderId);
 
     $customer_name = $order->get_meta('_billing_first_name') . ' ' . $order->get_meta('_billing_last_name');
@@ -61,7 +61,7 @@ function getOrderData($orderId) {
     ];
 
 
-    file_put_contents('datateste.txt', json_encode($data));
+
     return $data; 
 }
 
