@@ -105,6 +105,17 @@ class WC_Abandoned_Cart_Hook {
         if (is_user_logged_in()) {
             return;
         }
+
+        defined( 'WC_ABSPATH' ) || exit;
+
+        include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
+        include_once WC_ABSPATH . 'includes/class-wc-cart.php';
+    
+        if ( is_null( WC()->cart ) ) {
+            wc_load_cart();
+        }
+
+
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
         
