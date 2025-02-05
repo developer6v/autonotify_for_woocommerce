@@ -29,7 +29,6 @@ function autonotify_sendData($hook, $data) {
         $error_message = $response->get_error_message();
     } else { 
         $response_body = wp_remote_retrieve_body($response);  
-        file_put_contents ('senddataresponse.txt', $response_body);      
         return $response_body;
     }
 }
