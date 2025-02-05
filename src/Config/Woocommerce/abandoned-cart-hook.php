@@ -115,10 +115,17 @@ class WC_Abandoned_Cart_Hook {
         include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
         include_once WC_ABSPATH . 'includes/class-wc-cart.php';
     
-        if ( is_null( WC()->cart ) ) {
-            wc_load_cart();
+        if ( WC()->session ) {
+            WC()->session->set_customer_session_cookie(true);
         }
-
+        
+        if ( WC()->cart && ! WC()->cart->is_empty() ) {
+            $cart_contents = WC()->cart->get_cart_contents();
+            $cart_total = WC()->cart->get_cart_contents_total();
+        } else {
+            $cart_contents = [];
+            $cart_total = 0;
+        }
 
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
@@ -130,8 +137,6 @@ class WC_Abandoned_Cart_Hook {
             return;
         }
         
-        $cart_contents = WC()->cart->get_cart_contents();
-        $cart_total = WC()->cart->get_cart_contents_total();
         
         $existing_cart = $wpdb->get_var($wpdb->prepare(
             "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
