@@ -46,6 +46,7 @@ function autonotify_getOrderData($orderId) {
         "address" => $address,
         "customername" => $customer_name,
         "customeremail" => $customer_email,
+        "phone" => $customer_phone,  
         "customerphone" => $customer_phone,
         "customerid" => $customer_id,
         "ordertotal" => number_format($order->get_total(), 2, ',', ''),
