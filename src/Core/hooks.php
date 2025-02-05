@@ -31,7 +31,7 @@ function autonotify_password_reset( $user_login, $key ) {
 add_action('wc_abandoned_cart_detected', 'autonotify_handle_abandoned_cart', 10, 1);
 function autonotify_handle_abandoned_cart($cart) {
     $data = autonotify_getAbandonedCartData ($cart);
-    sendAutonotify(['abandoned_cart'], $data);
+    autonotify_sendData(['abandoned_cart'], $data);
     file_put_contents ('cart-user.txt', json_encode($data));
 }
 
@@ -40,7 +40,7 @@ function autonotify_handle_abandoned_cart($cart) {
 add_action('wc_abandoned_cart_guest_detected', 'autonotify_handle_abandoned_guest_cart', 10, 1);
 function autonotify_handle_abandoned_guest_cart ($cart) {
     $data = autonotify_getAbandonedCartDataGuest ($cart);
-    sendAutonotify(['abandoned_cart'], $data);
+    autonotify_sendData(['abandoned_cart'], $data);
 
     file_put_contents ('cart-guest.txt', json_encode($data));
 }
