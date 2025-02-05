@@ -1,7 +1,6 @@
 <?php
 
 function autonotify_sendData($hook, $data) {
-    file_put_contents ('senddata.txt', json_encode($data));
     global $wpdb;
     $table_name = $wpdb->prefix . "sr_autonotify_config";
 
@@ -29,7 +28,8 @@ function autonotify_sendData($hook, $data) {
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
     } else { 
-        $response_body = wp_remote_retrieve_body($response);        
+        $response_body = wp_remote_retrieve_body($response);  
+        file_put_contents ('senddataresponse.txt', json_encode($data));      
         return $response_body;
     }
 }
