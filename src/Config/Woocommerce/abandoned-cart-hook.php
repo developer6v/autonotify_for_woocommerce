@@ -137,7 +137,7 @@ class WC_Abandoned_Cart_Hook {
             "SELECT id FROM $table_name WHERE user_email = %s AND recovered = 0",
             $user_email
         ));
-          
+
         if ($existing_cart) {
             $wpdb->update(
                 $table_name,
@@ -149,7 +149,6 @@ class WC_Abandoned_Cart_Hook {
                 array('%s', '%f'),
                 array('%d')
             );
-            
         } else {
             $wpdb->insert(
                 $table_name,
