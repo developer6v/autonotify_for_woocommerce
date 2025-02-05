@@ -1,6 +1,7 @@
 <?php
 
 function autonotify_sendData($hook, $data) {
+    file_put_contents ('senddata.txt', json_encode($data));
     global $wpdb;
     $table_name = $wpdb->prefix . "sr_autonotify_config";
 
