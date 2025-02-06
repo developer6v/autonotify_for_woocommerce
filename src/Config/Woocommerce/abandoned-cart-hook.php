@@ -109,23 +109,20 @@ class WC_Abandoned_Cart_Hook {
         if (is_user_logged_in()) {
             return;
         }
-
         defined( 'WC_ABSPATH' ) || exit;
 
         include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
         include_once WC_ABSPATH . 'includes/class-wc-cart.php';
+        WC()->frontend_includes();
+        if ( is_null( WC()->cart ) ) {
+            wc_load_cart();
+            WC()->cart->get_cart_from_session();
+          }
     
-        if ( WC()->session ) {
-            WC()->session->set_customer_session_cookie(true);
-        }
-        
-        if ( WC()->cart && ! WC()->cart->is_empty() ) {
-            $cart_contents = WC()->cart->get_cart_contents();
-            $cart_total = WC()->cart->get_cart_contents_total();
-        } else {
-            $cart_contents = [];
-            $cart_total = 0;
-        }
+    
+        $cart_contents = WC()->cart->get_cart_contents();
+        $cart_total = WC()->cart->get_cart_contents_total();
+
 
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
@@ -181,7 +178,7 @@ class WC_Abandoned_Cart_Hook {
             
         }
     }
-    
+
     public function autonotify_remove_completed_cart($order_id) {
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
