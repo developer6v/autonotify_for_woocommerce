@@ -7,16 +7,6 @@ function autonotify_getOrderData($orderId) {
     $customer_email = $order->get_billing_email();
     $customer_phone = $order->get_billing_phone();
 
-    if (empty($customer_name)) {
-        $customer_name = __('Cliente não informado', 'woocommerce');
-    }
-    if (empty($customer_email)) {
-        $customer_email = __('Sem e-mail', 'woocommerce');
-    }
-    if (empty($customer_phone)) {
-        $customer_phone = __('Sem telefone', 'woocommerce');
-    }
-
     $address_1 = $order->get_billing_address_1(); 
     $address_2 = $order->get_billing_address_2();
     $city = $order->get_billing_city();
