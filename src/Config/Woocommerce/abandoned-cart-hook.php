@@ -181,8 +181,7 @@ class WC_Abandoned_Cart_Hook {
             
         }
     }
-
-
+    
     public function autonotify_remove_completed_cart($order_id) {
         global $wpdb;
         $table_name = esc_sql($wpdb->prefix . 'sr_wc_abandoned_carts');
