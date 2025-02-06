@@ -114,7 +114,9 @@ class WC_Abandoned_Cart_Hook {
         include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
         include_once WC_ABSPATH . 'includes/class-wc-cart.php';
         WC()->frontend_includes();
-   
+        if ( is_null( WC()->cart ) ) {
+            wc_load_cart();
+        }
     
     
         $cart_contents = WC()->cart->get_cart_contents();
