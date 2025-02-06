@@ -19,3 +19,4 @@ function autonotify_save_token_database($token, $status) {
         return 'Deu erro: ' . $e->getMessage();
     }
 }
+  

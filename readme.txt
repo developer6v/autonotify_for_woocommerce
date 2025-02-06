@@ -11,4 +11,5 @@ Autonotify for WooCommerce is a plugin that seamlessly integrates WooCommerce wi
 
 == External services ==
 
-This plugin connects to the Autonotify API to send information. It is needed for security reasons, such as the authentication token, and to automate the workflow of sending messages based on order status and abandoned carts.
+This plugin connects to the Autonotify API to transmit essential information. It is required for security reasons, such as authentication tokens, and to automate the workflow of sending messages based on order status and abandoned carts.
+For icons, it uses the Font Awesome library via CDN.

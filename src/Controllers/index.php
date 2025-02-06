@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
-require_once 'Api/token.php';
-require_once 'Woocommerce/guest_abandoned_cart.php';
+require_once AUTONOTIFY_PLUGIN_DIR . 'src/Controllers/Api/token.php';
+require_once AUTONOTIFY_PLUGIN_DIR . 'src/Controllers/Woocommerce/guest_abandoned_cart.php';
 
-?>
+?> 

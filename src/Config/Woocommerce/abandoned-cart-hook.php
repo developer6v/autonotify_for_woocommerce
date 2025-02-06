@@ -46,7 +46,7 @@ class WC_Abandoned_Cart_Hook {
                 last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 recovered TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (id)
-            ) $charset_collate;";
+            ) $charset_collate;"; 
     
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
