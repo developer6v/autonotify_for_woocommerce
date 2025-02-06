@@ -22,7 +22,6 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         shipping_country	: jQuery('#shipping_country').val(),
         ship_to_billing		: jQuery('#shiptobilling-checkbox').val(),
     };
-    console.log(JSON.stringify(data));
     jQuery.ajax ({
         url: autonotify_ajax_abandoned_cart_guest.ajax_url,
         method: "POST",
