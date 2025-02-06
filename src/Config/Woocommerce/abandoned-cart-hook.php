@@ -116,6 +116,7 @@ class WC_Abandoned_Cart_Hook {
         WC()->frontend_includes();
         if ( is_null( WC()->cart ) ) {
             wc_load_cart();
+            WC()->cart->get_cart_from_session();
         }
     
     
