@@ -17,7 +17,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit; 
 define( 'AUTONOTIFY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AUTONOTIFY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
 require_once AUTONOTIFY_PLUGIN_DIR . 'src/Config/index.php';
 
 ?>
