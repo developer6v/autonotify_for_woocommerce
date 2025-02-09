@@ -75,7 +75,9 @@ function autonotify_getAbandonedCartData($cart) {
         "hour" => $hour,
         "cart_url" => $cartUrl,
         "cart_value" => $cartValue,
-        "order_products" => $orderProductsString, 
+        "order_products" => $orderProductsString,
+        "whatsapp_link" => "https://wa.me/" . preg_replace('/\D/', '', $customerPhone),
+        
     ];
 
     return $data;
@@ -156,6 +158,7 @@ function autonotify_getAbandonedCartDataGuest ($cart) {
         "cart_url" => $cartUrl,
         "cart_value" => $cartValue,
         "order_products" => $orderProductsString, 
+        "whatsapp_link" => "https://wa.me/" . preg_replace('/\D/', '', $customerPhone),
     ];
 
     return $data;
