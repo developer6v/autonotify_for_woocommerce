@@ -9,7 +9,7 @@ function autonotify_table_manager() {
     if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
         $sql = "CREATE TABLE $table_name (
             id int(11) NOT NULL auto_increment,
-            token TEXT NULL,
+            token TEXT NULL, 
             instance_key varchar(60) NULL,
             status varchar(60) NULL,
             PRIMARY KEY (id) 
