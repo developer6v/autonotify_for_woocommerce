@@ -46,7 +46,6 @@ function autonotify_getOrderData($orderId) {
         "date" => gmdate("d/m/Y"),
         "hour" => gmdate("H:i:s")
     ];
-
     return $data;
 }
 
