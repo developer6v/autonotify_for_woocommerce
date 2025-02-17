@@ -7,7 +7,6 @@ function autonotify_sendData($hook, $data) {
     $api_key = API_URL;
     $token = $wpdb->get_var($wpdb->prepare("SELECT token FROM %i WHERE id = %d", [$table_name, 1]));
 
-
     $headers = [
         "Content-Type" => "application/json",
         "Authorization" => "Bearer " . $token
@@ -27,8 +26,12 @@ function autonotify_sendData($hook, $data) {
 
     if (is_wp_error($response)) {
         $error_message = $response->get_error_message();
+        file_put_contents('erro_resposta.txt', $error_message . PHP_EOL, FILE_APPEND);
     } else { 
         $response_body = wp_remote_retrieve_body($response);  
+
+        file_put_contents('resposta_api.txt', $response_body . PHP_EOL, FILE_APPEND);
+
         return $response_body;
     }
 }

@@ -18,3 +18,10 @@ jobs:
           server: ${{ secrets.FTP_SERVER_MYSOUREI}}
           username: ${{ secrets.FTP_USERNAME_COVALUB }}
           password: ${{ secrets.FTP_PASSWORD }}
+      - name: Autonotify/Woocommerce/OriginalSaoPaulo
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER_ORIGINAL}}
+          username: ${{ secrets.FTP_USERNAME_ORIGINAL }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          
