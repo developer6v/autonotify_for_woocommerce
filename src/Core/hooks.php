@@ -5,6 +5,7 @@
 // Mudança de Status de Pedido
 add_action('woocommerce_order_status_changed', 'autonotify_manage_order_status', 10, 3);
 function autonotify_manage_order_status ($order_id, $old_status, $new_status) {
+    file_put_contents('statuschanged.txt', $response_body . PHP_EOL, FILE_APPEND);
     $data = autonotify_getOrderData($order_id);
     $status = str_replace("-", "_", $new_status);
     $status_admin = $status . "_admin";
