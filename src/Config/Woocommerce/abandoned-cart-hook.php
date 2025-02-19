@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WC_Abandoned_Cart_Hook {
+class Autonotify_Abandoned_Cart_Hook {
     
     public function __construct() {
         $this->autonotify_create_abandoned_cart_table();
@@ -227,5 +227,5 @@ class WC_Abandoned_Cart_Hook {
 }
 
 
-add_filter('cron_schedules', array('WC_Abandoned_Cart_Hook', 'autonotify_register_cron_schedule'));
-new WC_Abandoned_Cart_Hook();
+add_filter('cron_schedules', array('Autonotify_Abandoned_Cart_Hook', 'autonotify_register_cron_schedule'));
+new Autonotify_Abandoned_Cart_Hook();

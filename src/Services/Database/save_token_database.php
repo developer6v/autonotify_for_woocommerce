@@ -2,8 +2,6 @@
 
 function autonotify_save_token_database($token, $status) {
     try {
-        require_once __DIR__ . '/../../../../../../wp-load.php';
-
         global $wpdb;
         $table_name = $wpdb->prefix . 'sr_autonotify_config'; 
 
