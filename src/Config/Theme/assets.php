@@ -4,7 +4,6 @@
 function autonotify_enqueue_assets() {
     wp_enqueue_script('homeScript', AUTONOTIFY_PLUGIN_URL . 'public/js/home.js', array(), gmdate('YmdHis'), true);
     wp_enqueue_style('homeStyle', AUTONOTIFY_PLUGIN_URL . 'public/css/home.css', array(), gmdate('YmdHis'));
-    wp_enqueue_style('font-awesome','https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), gmdate('YmdHis'));
 
     wp_localize_script('homeScript', 'autonotify_ajax_token', array(
         'ajax_url' => rest_url('autonotify/v1/token/'),  
