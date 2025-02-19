@@ -141,3 +141,8 @@
 .autonotify_body_inactive, .autonotify_body_active {
     display: none;
 }
+
+.validatetokenicon {
+    fill: white;
+    width: 15px;
+}
