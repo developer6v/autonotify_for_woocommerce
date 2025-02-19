@@ -103,18 +103,17 @@
     display: none;
 }
 
-.tokencheckedicon {
-    color: #00ff14;
-    font-size: 17px;
-}
-
 
 .autonotify-icon {
     width: 10px;
 }
 
+.tokencheckedicon {
+    fill: #00ff14;
+    font-size: 17px;
+}
+
 .autonotify_edit_token {
-    color: #f4f4f4;
     font-size: 12px;
     font-weight: bold;
     border: 0px;
@@ -124,6 +123,10 @@
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s ease;
+}
+
+.autonotify_edit_token svg {
+    color: #f4f4f4;
 }
 
 .autonotify_edit_token:hover {
