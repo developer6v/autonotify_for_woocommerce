@@ -8,7 +8,7 @@ function autonotify_layout() {
     $status = $wpdb->get_var($wpdb->prepare("SELECT status FROM %i WHERE id = %d", [$table_name, 1]));
 
     echo "<div class='autonotify-header'>
-        <img src='" . esc_url(AUTONOTIFY_PLUGIN_URL . ('/public/img/autonotify.svg', __FILE__)) . "' alt='' class=''/>
+        <img src='" . esc_url(AUTONOTIFY_PLUGIN_URL . '/public/img/autonotify.svg') . "' alt='' class=''/>
     </div>
     <div class='autonotify-body' data-status='" . esc_attr($status) . "'>
 
@@ -58,7 +58,7 @@ function autonotify_layout() {
                 </svg>
                 Validar Token
             </button>    
-            <img class='autonotify_loading' src='" . esc_url(AUTONOTIFY_PLUGIN_URL . ('/public/gif/loading.gif', __FILE__)) . "' alt='' class=''/>
+            <img class='autonotify_loading' src='" . esc_url(AUTONOTIFY_PLUGIN_URL . '/public/gif/loading.gif') . "' alt='' class=''/>
         </div>
 
     </div>
