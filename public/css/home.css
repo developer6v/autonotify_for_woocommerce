@@ -108,6 +108,11 @@
     font-size: 17px;
 }
 
+
+.autonotify-icon {
+    width: 10px;
+}
+
 .autonotify_edit_token {
     color: #f4f4f4;
     font-size: 12px;
