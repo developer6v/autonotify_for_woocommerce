@@ -53,7 +53,7 @@ function autonotify_layout() {
                 <input value='" . esc_attr($token) . "' class='autonotify_token' placeholder='Informe seu token de integração Autonotify.' type='text'/>
             </div>    
             <button id='autonotify_validate_token' class='autonotify_validate_token'>
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' class='autonotify-icon'>
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' class='autonotify-icon autonotifyboxicon'>
                     <path d='M96 0C78.3 0 64 14.3 64 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32l0 96 64 0 0-96c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l0 32c0 77.4 55 142 128 156.8l0 67.2c0 17.7 14.3 32 32 32s32-14.3 32-32l0-67.2c12.3-2.5 24.1-6.4 35.1-11.5c-2.1-10.8-3.1-21.9-3.1-33.3c0-80.3 53.8-148 127.3-169.2c.5-2.2 .7-4.5 .7-6.8c0-17.7-14.3-32-32-32L32 160zM576 368a144 144 0 1 0 -288 0 144 144 0 1 0 288 0zm-76.7-43.3c6.2 6.2 6.2 16.4 0 22.6l-72 72c-6.2 6.2-16.4 6.2-22.6 0l-40-40c-6.2-6.2-6.2-16.4 0-22.6l72-72c6.2-6.2 16.4-6.2 22.6 0l40 40z'/>
                 </svg>
                 Validar Token
@@ -65,13 +65,13 @@ function autonotify_layout() {
 
     <div class='autonotify_warning_div'>
         <div class='autonotify_token_saved'>
-            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='autonotify-icon'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='autonotify-icon autonotifyboxicon'>
                 <path d='M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z'/>
             </svg>
             Token Validado!
         </div>
         <div class='autonotify_token_failed'>
-            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='autonotify-icon'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='autonotify-icon autonotifyboxicon'>
                 <path d='M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM192 176c0-13.3 10.7-24 24-24h80c13.3 0 24 10.7 24 24v160c0 13.3-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24V176zM256 48c-22.1 0-40 17.9-40 40 0 22.1 17.9 40 40 40 22.1 0 40-17.9 40-40C296 65.9 278.1 48 256 48z'/>
             </svg>
             Token Inválido!
