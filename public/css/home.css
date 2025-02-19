@@ -110,10 +110,11 @@
 
 .tokencheckedicon {
     fill: #00ff14;
-    font-size: 17px;
+    width: 17px;
 }
 
 .autonotify_edit_token {
+    color: #f4f4f4;
     font-size: 12px;
     font-weight: bold;
     border: 0px;
@@ -126,7 +127,7 @@
 }
 
 .autonotify_edit_token svg {
-    color: #f4f4f4;
+    fill: #f4f4f4;
 }
 
 .autonotify_edit_token:hover {
