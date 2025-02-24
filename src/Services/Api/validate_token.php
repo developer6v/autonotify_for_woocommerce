@@ -1,7 +1,7 @@
 <?php
 
 function autonotify_validate_token ($token) {
-    $api_key = API_URL;
+    $api_key = AUTONOTIFY_API_URL;
     $headers = [  
         "Content-Type" => "application/json",
         "Authorization" => "Bearer " . $token

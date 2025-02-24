@@ -12,15 +12,15 @@ class Autonotify_Abandoned_Cart_Hook {
         add_action('woocommerce_before_checkout_form', array($this, 'autonotify_track_cart_on_checkout'));
         add_action('woocommerce_checkout_order_created', array($this, 'autonotify_remove_completed_cart'));
         
-        if (!wp_next_scheduled('check_abandoned_carts')) {
-            wp_schedule_event(time(), 'every_20_minutes', 'check_abandoned_carts');
+        if (!wp_next_scheduled('autonotify_check_abandoned_carts')) {
+            wp_schedule_event(time(), 'autonotify_every_20_minutes', 'autonotify_check_abandoned_carts');
         }
         
-        add_action('check_abandoned_carts', array($this, 'autonotify_process_abandoned_carts'));
+        add_action('autonotify_check_abandoned_carts', array($this, 'autonotify_process_abandoned_carts'));
     }
     
     public static function autonotify_register_cron_schedule($schedules) {
-        $schedules['every_20_minutes'] = array(
+        $schedules['autonotify_every_20_minutes'] = array(
             'interval' => 20 * 60, 
             'display'  => 'A cada 20 minutos'
         );
@@ -211,9 +211,9 @@ class Autonotify_Abandoned_Cart_Hook {
 
         foreach ($abandoned_carts as $cart) {
             if ($cart->is_guest) {
-                do_action('wc_abandoned_cart_guest_detected', $cart);
+                do_action('autonotify_abandoned_cart_guest_detected', $cart);
             } else {
-                do_action('wc_abandoned_cart_detected', $cart);
+                do_action('autonotify_abandoned_cart_detected', $cart);
             }
             $wpdb->update(
                 $table_name,

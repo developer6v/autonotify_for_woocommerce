@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
 // Admin
 function autonotify_enqueue_assets() {
     wp_enqueue_script('homeScript', AUTONOTIFY_PLUGIN_URL . 'public/js/home.js', array(), gmdate('YmdHis'), true);

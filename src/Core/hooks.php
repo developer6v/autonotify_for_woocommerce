@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 
@@ -6,7 +7,6 @@
 add_action('woocommerce_order_status_changed', 'autonotify_manage_order_status', 10, 3);
 function autonotify_manage_order_status ($order_id, $old_status, $new_status) {
     $data = autonotify_getOrderData($order_id); 
-    file_put_contents('statuschanged.txt', json_encode($data, true) . PHP_EOL, FILE_APPEND);
     $status = str_replace("-", "_", $new_status);
     $status_admin = $status . "_admin";
     autonotify_sendData([$status, $status_admin], $data);
@@ -29,7 +29,7 @@ function autonotify_password_reset( $user_login, $key ) {
 
 
 // Carrinho Abandonado
-add_action('wc_abandoned_cart_detected', 'autonotify_handle_abandoned_cart', 10, 1);
+add_action('autonotify_abandoned_cart_detected', 'autonotify_handle_abandoned_cart', 10, 1);
 function autonotify_handle_abandoned_cart($cart) {
     $data = autonotify_getAbandonedCartData ($cart);
     autonotify_sendData(['abandoned_cart', 'abandoned_cart_admin'], $data);
@@ -37,7 +37,7 @@ function autonotify_handle_abandoned_cart($cart) {
 
 
 // Guest - Carrinho Abandonado
-add_action('wc_abandoned_cart_guest_detected', 'autonotify_handle_abandoned_guest_cart', 10, 1);
+add_action('autonotify_abandoned_cart_guest_detected', 'autonotify_handle_abandoned_guest_cart', 10, 1);
 function autonotify_handle_abandoned_guest_cart ($cart) {
     $data = autonotify_getAbandonedCartDataGuest ($cart);
     autonotify_sendData(['abandoned_cart', 'abandoned_cart_admin'], $data);

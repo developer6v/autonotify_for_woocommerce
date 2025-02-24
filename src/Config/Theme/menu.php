@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 // Configuração Menu
 function autonotify_menu_manager() {
     add_menu_page(
