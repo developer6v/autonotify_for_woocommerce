@@ -22,9 +22,7 @@ function autonotify_manage_endpoints () {
         array(
             'methods' => 'POST',
             'callback' => 'autonotify_endpoint_abandoned_cart',
-            'permission_callback' => function() {
-                return current_user_can( 'manage_options' );
-            }
+            'permission_callback' => '__return_true', // guest users have permission
         )
     );
 
