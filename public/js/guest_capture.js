@@ -27,6 +27,9 @@ jQuery( 'input#billing_email' ).on( 'change', function() {
         method: "POST",
         contentType: "application/json", 
         data: JSON.stringify(data),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-WP-Nonce', autonotify_ajax_abandoned_cart_guest.nonce);
+        },
         
         success : function (response) {
             console.log('response', response);

@@ -18,6 +18,9 @@ jQuery(document).ready(function($){
             data: {
                 "token" : token,
             }, 
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-WP-Nonce', autonotify_ajax_token.nonce);
+            },
             success : function (response) {
                 if (response != 'Token atualizado com sucesso.') {
 
