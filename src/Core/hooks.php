@@ -9,7 +9,7 @@ function autonotify_manage_order_status ($order_id, $old_status, $new_status) {
     $data = autonotify_getOrderData($order_id); 
     $status = str_replace("-", "_", $new_status);
     $status_admin = $status . "_admin";
-    autonotify_sendData([$status, $status_admin], $data);
+    autonotify_sendData([$status, $status_admin], $data); 
 }
 
 // Pedido Criado

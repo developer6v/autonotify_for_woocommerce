@@ -12,6 +12,8 @@ function autonotify_sendData($hook, $data) {
         "Authorization" => "Bearer " . $token
     ];
 
+    $data['phone'] = formatPhoneNumber($data['phone']);
+
     $postfiels = [
         "keys" => $hook,
         "data" => $data,
