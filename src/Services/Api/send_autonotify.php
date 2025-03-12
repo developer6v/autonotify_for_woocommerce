@@ -13,7 +13,6 @@ function autonotify_sendData($hook, $data) {
     ];
 
     $data['phone'] = formatPhoneNumber($data['phone']);
-    file_put_contents('data_json_send_autonotify.txt', json_encode($data));
 
     $postfiels = [
         "keys" => $hook,
