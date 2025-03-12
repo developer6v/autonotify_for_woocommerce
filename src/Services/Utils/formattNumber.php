@@ -1,6 +1,6 @@
 <?php
 function formatPhoneNumber($phone) {
-    $cleanedPhone = preg_replace('/[\s\.\-\(\)]/', '', $phone);
+    $cleanedPhone = preg_replace('/\D/', '', $phone);
     if (strpos($cleanedPhone, '55') !== 0) {
         $regex = '/^(\d{2})(\d{8,9})$/';
 
